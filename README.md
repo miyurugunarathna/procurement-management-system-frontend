@@ -1,7 +1,7 @@
-# 🚩The Children Cloud - Daycare system
+# 🚩Procurement Management System - FE
 
 
-This project is to create a web application frontend for daycare centers to facilitate and manage their daily work.
+This project is to create a web application frontend for procurement management system.
 
 ## ✨Features
 
@@ -14,7 +14,7 @@ This project is to create a web application frontend for daycare centers to faci
 Clone the project
 
 ```bash
-  git clone https://github.com/miyurugunarathna/children-cloud-frontend.git
+  https://github.com/miyurugunarathna/procurement-management-system-frontend.git
 ```
 
 Go to the project directory
