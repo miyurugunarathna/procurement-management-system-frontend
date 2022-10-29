@@ -23,21 +23,120 @@ const UpdateStatus = () => {
             style={{ marginRight: "40px", display: "grid" }}>
             <div
               class="rounded-lg shadow-lg bg-white max-w-m"
-              style={{ height: "150px", width: "800px" }}>
-              <h2>Sample</h2>
+              style={{ height: "170px", width: "800px", marginBottom: "50px" }}>
+              <br />
+
+              <div style={{ display: "flex" }}>
+                <div>
+                  <p style={{ marginLeft: "30px", paddingTop: "30px" }}>
+                    Order ID
+                  </p>
+
+                  <br />
+                </div>
+                <div
+                  style={{
+                    borderLeft: "6px solid black",
+                    height: "140px",
+                    marginLeft: "50px",
+                  }}></div>
+
+                <div style={{ display: "flex" }}>
+                  <div style={{ marginLeft: "30px" }}>
+                    <p>Placed By : sample name</p>
+                    <br />
+                    <p>Supplier : sample name</p>
+                    <br />
+                    <p>Delivery Status : Pending</p>
+                    <br />
+                  </div>
+                  <div style={{ marginLeft: "150px" }}>
+                    <p>Order Created Date : date</p>
+                    <br />
+                    <p>Delivered Date : date</p>
+                    <br />
+                  </div>
+                </div>
+              </div>
             </div>
             <br />
 
             <div
               class="rounded-lg shadow-lg bg-white max-w-m"
-              style={{ height: "150px", width: "800px", marginTop: "50px" }}>
-              <h2>Sample</h2>
+              style={{ height: "170px", width: "800px", marginBottom: "50px" }}>
+              <br />
+
+              <div style={{ display: "flex" }}>
+                <div>
+                  <p style={{ marginLeft: "30px", paddingTop: "30px" }}>
+                    Order ID
+                  </p>
+
+                  <br />
+                </div>
+                <div
+                  style={{
+                    borderLeft: "6px solid black",
+                    height: "140px",
+                    marginLeft: "50px",
+                  }}></div>
+
+                <div style={{ display: "flex" }}>
+                  <div style={{ marginLeft: "30px" }}>
+                    <p>Placed By : sample name</p>
+                    <br />
+                    <p>Supplier : sample name</p>
+                    <br />
+                    <p>Delivery Status : Pending</p>
+                    <br />
+                  </div>
+                  <div style={{ marginLeft: "150px" }}>
+                    <p>Order Created Date : date</p>
+                    <br />
+                    <p>Delivered Date : date</p>
+                    <br />
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div
               class="rounded-lg shadow-lg bg-white max-w-m"
-              style={{ height: "150px", width: "800px", marginTop: "50px" }}>
-              <h2>Sample</h2>
+              style={{ height: "170px", width: "800px", marginBottom: "50px" }}>
+              <br />
+
+              <div style={{ display: "flex" }}>
+                <div>
+                  <p style={{ marginLeft: "30px", paddingTop: "30px" }}>
+                    Order ID
+                  </p>
+
+                  <br />
+                </div>
+                <div
+                  style={{
+                    borderLeft: "6px solid black",
+                    height: "140px",
+                    marginLeft: "50px",
+                  }}></div>
+
+                <div style={{ display: "flex" }}>
+                  <div style={{ marginLeft: "30px" }}>
+                    <p>Placed By : sample name</p>
+                    <br />
+                    <p>Supplier : sample name</p>
+                    <br />
+                    <p>Delivery Status : Pending</p>
+                    <br />
+                  </div>
+                  <div style={{ marginLeft: "150px" }}>
+                    <p>Order Created Date : date</p>
+                    <br />
+                    <p>Delivered Date : date</p>
+                    <br />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

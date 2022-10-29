@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Cover from "../assets/images/supply.jpg";
+import UpdateStatusModel from "../components/models/UpdateStatus";
 
 const Request = () => {
   return (
@@ -52,6 +53,8 @@ const Request = () => {
                   </div>
                   <div style={{ marginLeft: "150px" }}>
                     <p>Sample Date</p>
+                    <br />
+                    <UpdateStatusModel />
                   </div>
                 </div>
               </div>
@@ -89,6 +92,8 @@ const Request = () => {
                   </div>
                   <div style={{ marginLeft: "150px" }}>
                     <p>Sample Date</p>
+                    <br />
+                    <UpdateStatusModel />
                   </div>
                 </div>
               </div>
@@ -125,6 +130,8 @@ const Request = () => {
                   </div>
                   <div style={{ marginLeft: "150px" }}>
                     <p>Sample Date</p>
+                    <br />
+                    <UpdateStatusModel />
                   </div>
                 </div>
               </div>

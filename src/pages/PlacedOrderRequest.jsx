@@ -3,8 +3,30 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Cover from "../assets/images/supply.jpg";
+import UpdateOrderRequest from "../components/models/UpdateOrderRequest";
+import Swal from "sweetalert2";
 
 const PlacedOrderRequest = () => {
+  const deleteOrder = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Please confirm whether you intend to delete this Order`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        const msgText = err.message.split("Error: ")[1];
+        swal.fire("Error!", msgText, "error");
+      });
+  };
+
   return (
     <div>
       <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
@@ -50,8 +72,27 @@ const PlacedOrderRequest = () => {
                     <p>Order Status : Pending</p>
                     <br />
                   </div>
-                  <div style={{ marginLeft: "150px" }}>
-                    <p>Sample Date</p>
+                  <div style={{ display: "flex" }}>
+                    <div style={{ marginLeft: "150px", display: "flex" }}>
+                      <p style={{ paddingRight: "20px" }}>Sample Date</p>
+                      <UpdateOrderRequest />
+                      <div
+                        class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                        onClick={deleteOrder}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor">
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -87,8 +128,27 @@ const PlacedOrderRequest = () => {
                     <p>Order Status : Pending</p>
                     <br />
                   </div>
-                  <div style={{ marginLeft: "150px" }}>
-                    <p>Sample Date</p>
+                  <div style={{ display: "flex" }}>
+                    <div style={{ marginLeft: "150px", display: "flex" }}>
+                      <p style={{ paddingRight: "20px" }}>Sample Date</p>
+                      <UpdateOrderRequest />
+                      <div
+                        class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                        onClick={deleteOrder}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor">
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -123,8 +183,27 @@ const PlacedOrderRequest = () => {
                     <p>Order Status : Pending</p>
                     <br />
                   </div>
-                  <div style={{ marginLeft: "150px" }}>
-                    <p>Sample Date</p>
+                  <div style={{ display: "flex" }}>
+                    <div style={{ marginLeft: "150px", display: "flex" }}>
+                      <p style={{ paddingRight: "20px" }}>Sample Date</p>
+                      <UpdateOrderRequest />
+                      <div
+                        class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                        onClick={deleteOrder}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor">
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
