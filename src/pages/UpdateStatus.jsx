@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Cover from "../assets/images/supply.jpg";
+import UpdateDeliveryStatus from "../components/models/UpdateDeliveryStatus";
 
 const UpdateStatus = () => {
   return (
@@ -53,7 +54,7 @@ const UpdateStatus = () => {
                   <div style={{ marginLeft: "150px" }}>
                     <p>Order Created Date : date</p>
                     <br />
-                    <p>Delivered Date : date</p>
+                    <UpdateDeliveryStatus />
                     <br />
                   </div>
                 </div>
@@ -93,7 +94,7 @@ const UpdateStatus = () => {
                   <div style={{ marginLeft: "150px" }}>
                     <p>Order Created Date : date</p>
                     <br />
-                    <p>Delivered Date : date</p>
+                    <UpdateDeliveryStatus />
                     <br />
                   </div>
                 </div>
@@ -132,7 +133,7 @@ const UpdateStatus = () => {
                   <div style={{ marginLeft: "150px" }}>
                     <p>Order Created Date : date</p>
                     <br />
-                    <p>Delivered Date : date</p>
+                    <UpdateDeliveryStatus />
                     <br />
                   </div>
                 </div>
