@@ -8,10 +8,10 @@ yarn format:check || (
     false;
 )
 
-yarn lint || (
-    echo "ESLint check failed. 😑 Please, adhere to coding standards. Make the required changes listed above and try again. Woof...";
-    false;
-)
+#yarn lint || (
+#    echo "ESLint check failed. 😑 Please, adhere to coding standards. Make the required changes listed above and try again. Woof...";
+#    false;
+#)
 
 echo "Yaay... Code seems like good. 👏 Let's try to build now. Woof woof 🐶🐕"
 
