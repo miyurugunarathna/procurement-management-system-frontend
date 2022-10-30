@@ -21,14 +21,17 @@ export const Login = () => {
   useEffect(() => {
     if (state.isLoggedIn) {
       switch (String(state.user?.role).toLowerCase()) {
-        case "admin":
-          navigate("/list");
+        case "SITE_MANAGER":
+          navigate("/orderRequest");
           break;
-        case "staff":
-          navigate("/assignedKids");
+        case "PROCUREMENT":
+          navigate("/request");
+          break;
+        case "SENIOR":
+          navigate("/request");
           break;
         default:
-          navigate("/kidos");
+          navigate("/order");
       }
     }
   }, [state.isLoggedIn]);
@@ -37,7 +40,7 @@ export const Login = () => {
     e.preventDefault();
     try {
       const res = await userRequest.login({
-        userName: e.target.userName.value,
+        email: e.target.email.value,
         password: e.target.password.value,
       });
       if (res?.status === SUCCESS && res?.data) {
@@ -77,11 +80,11 @@ export const Login = () => {
               <hr className="opacity-10 mb-4" />
               <input
                 className="mt-1 w-full border rounded py-2 px-3"
-                type="text"
-                id="userName"
-                name="userName"
+                type="email"
+                id="email"
+                name="email"
                 required
-                placeholder="Enter User Name"
+                placeholder="Enter email"
               />
               <input
                 className="mt-3 w-full border rounded py-2 px-3"

@@ -8,6 +8,7 @@ import UpdateStatus from "./pages/UpdateStatus";
 import DeliveryAdvice from "./pages/DeliveryAdvice";
 import Payment from "./pages/Payment";
 import Request from "./pages/Request";
+import { Register, Login } from "./pages";
 
 const App = () => {
   return (
@@ -21,6 +22,8 @@ const App = () => {
         <Route path="/deliveryStatus" element={<UpdateStatus />} />
         <Route path="/deliveryAdvice" element={<DeliveryAdvice />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </Router>
   );

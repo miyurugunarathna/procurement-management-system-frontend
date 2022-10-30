@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import Swal from "sweetalert2";
 
 import userRequest from "../api/User/user.request";
@@ -15,4 +16,5 @@ export const getUserDetails = async () => {
   }).then(() => {
     return Promise.resolve(null);
   });
+  return null;
 };

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -7,9 +7,10 @@ import userRequest from "../api/User/user.request";
 import useFetchUserProfile from "../hooks/useFetchUserProfile";
 
 import Cover from "../assets/images/cover.jpg";
-import { SUCCESS, ROLE_PARENT } from "../constants";
+import { SUCCESS } from "../constants";
 
 export const Register = () => {
+  const [department, setDepartment] = useState(null);
   let navigate = useNavigate();
   const state = useSelector((state) => state.user);
 
@@ -23,14 +24,38 @@ export const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const res = await userRequest.addUser({
-      firstName: e.target.firstName.value,
-      lastName: e.target.lastName.value,
+    let role;
+    switch (e.target.department.value) {
+      case "PROCUREMENT":
+        role = "PROCUREMENT";
+        break;
+      case "MANAGEMENT":
+        role = "SENIOR";
+        break;
+      case "ONSITE":
+        role = "SITE_MANAGER";
+        break;
+      case "OTHER":
+        role = "SUPPLIER";
+        break;
+      default:
+        role = null;
+    }
+
+    let data = {
+      name: e.target.name.value,
+      nic: e.target.nic.value,
       email: e.target.email.value,
-      userName: e.target.userName.value,
+      mobile: e.target.mobile.value,
+      department: e.target.department.value,
       password: e.target.password.value,
-      role: ROLE_PARENT,
-    });
+      role: role,
+    };
+
+    if (department === "ONSITE")
+      data = { ...data, siteName: e.target.siteName.value };
+
+    const res = await userRequest.addUser(data);
     if (res?.status === SUCCESS) {
       Swal.fire({
         title: "Registration success!",
@@ -50,20 +75,24 @@ export const Register = () => {
     }
   };
 
+  const handleDepartment = (e) => {
+    setDepartment(e?.target?.value);
+  };
+
   const inputs = [
     {
       type: "text",
-      id: "firstName",
-      name: "firstName",
+      id: "name",
+      name: "name",
       required: true,
-      placeholder: "First name",
+      placeholder: "Name",
     },
     {
       type: "text",
-      id: "lastName",
-      name: "lastName",
+      id: "nic",
+      name: "nic",
       required: true,
-      placeholder: "Last name",
+      placeholder: "NIC",
     },
     {
       type: "email",
@@ -74,10 +103,23 @@ export const Register = () => {
     },
     {
       type: "text",
-      id: "userName",
-      name: "userName",
+      id: "mobile",
+      name: "mobile",
       required: true,
-      placeholder: "Username",
+      placeholder: "Mobile",
+    },
+    {
+      type: "select",
+      id: "department",
+      name: "department",
+      required: true,
+      placeholder: "Department",
+      options: [
+        { lable: "Procurement", value: "PROCUREMENT" },
+        { lable: "Management", value: "MANAGEMENT" },
+        { lable: "Onsite", value: "ONSITE" },
+        { lable: "Other", value: "OTHER" },
+      ],
     },
     {
       type: "password",
@@ -102,23 +144,48 @@ export const Register = () => {
           </div>
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <form className="w-full" onSubmit={handleRegister}>
-              <h1 className="mb-6 text-2xl text-center tracking-tight font-bold text-black">
+              <h1 className="mb-4 text-xl text-center tracking-tight font-semibold text-black">
                 <span className="font-normal">Welcome to</span>
                 <br />
-                The Children Cloud
+                The Procurement Management Portal
               </h1>
               <hr className="opacity-10 mb-4" />
-              {inputs.map((i, key) => (
+              {inputs.map((i, key) =>
+                i.type !== "select" ? (
+                  <input
+                    key={key}
+                    className="mt-2 w-full border rounded py-1 px-3"
+                    type={i.type}
+                    id={i.id}
+                    name={i.name}
+                    required={i.required}
+                    placeholder={i.placeholder}
+                  />
+                ) : (
+                  <select
+                    key={key}
+                    name={i.name}
+                    id={i.id}
+                    className="mt-2 w-full border rounded py-1 px-2"
+                    onChange={handleDepartment}>
+                    {i.options.map((option, key) => (
+                      <option key={key} value={option.value}>
+                        {option.lable}
+                      </option>
+                    ))}
+                  </select>
+                ),
+              )}
+              {department === "ONSITE" && (
                 <input
-                  key={key}
-                  className="mt-3 w-full border rounded py-2 px-3"
-                  type={i.type}
-                  id={i.id}
-                  name={i.name}
-                  required={i.required}
-                  placeholder={i.placeholder}
+                  id="sitename"
+                  className="mt-2 w-full border rounded py-1 px-3"
+                  type="text"
+                  name="siteName"
+                  required
+                  placeholder="Site Name"
                 />
-              ))}
+              )}
 
               <button className="mt-8 py-2 rounded text-white btn btn-active btn-primary w-full bg-black">
                 Register
