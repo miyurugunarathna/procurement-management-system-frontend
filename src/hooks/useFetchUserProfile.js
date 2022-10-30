@@ -16,6 +16,7 @@ const useFetchUserProfile = async (isProtected = true) => {
       dispatch(setUser(user));
       dispatch(setIsLoggedIn(true));
     } else {
+      /* eslint-disable no-lonely-if */
       if (isProtected) navigate("/");
     }
   }

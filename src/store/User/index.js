@@ -3,14 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: {
     id: null,
-    firstName: null,
-    lastName: null,
-    userName: null,
+    name: null,
+    nic: null,
     email: null,
-    role: null,
     mobile: null,
-    address: null,
-    url: null,
+    department: null,
+    role: null,
+    siteName: null,
   },
   isLoggedIn: false,
 };
@@ -18,14 +17,13 @@ const initialState = {
 const mapUserDetails = (data = {}) => ({
   user: {
     id: data?._id,
-    firstName: data?.firstName,
-    lastName: data?.lastName,
-    userName: data?.userName,
+    name: data?.name,
+    nic: data?.nic,
     email: data?.email,
-    role: data?.role,
     mobile: data?.mobile,
-    address: data?.address,
-    url: data?.url,
+    department: data?.department,
+    role: data?.role,
+    siteName: data?.siteName,
   },
 });
 
