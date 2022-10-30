@@ -72,10 +72,10 @@ export const Login = () => {
           </div>
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <form className="w-full" onSubmit={handleLogin}>
-              <h1 className="mb-6 text-2xl text-center tracking-tight font-bold text-black">
+              <h1 className="mb-4 text-xl text-center tracking-tight font-bold text-black">
                 <span className="font-normal">Welcome to</span>
                 <br />
-                The Children Cloud
+                The Procurement Management Portal
               </h1>
               <hr className="opacity-10 mb-4" />
               <input
