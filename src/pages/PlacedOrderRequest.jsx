@@ -23,7 +23,7 @@ const PlacedOrderRequest = () => {
       .catch((err) => {
         console.log(err.message);
         const msgText = err.message.split("Error: ")[1];
-        swal.fire("Error!", msgText, "error");
+        Swal.fire("Error!", msgText, "error");
       });
   };
 
