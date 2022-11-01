@@ -17,7 +17,15 @@ const PlacedOrderRequest = () => {
     });
   }, []);
 
-  const deleteOrder = () => {
+  const fetchOrders = () => {
+    orderRequest.getOrdersforManager().then((res) => {
+      console.log(res.data);
+      setorders(res.data);
+    });
+  };
+
+  const deleteOrder = (id) => {
+    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: `Please confirm whether you intend to delete this Order`,
@@ -28,7 +36,18 @@ const PlacedOrderRequest = () => {
       confirmButtonText: "Delete",
     })
       .then((res) => {
-        console.log(res);
+        if (res.value) {
+          orderRequest
+            .deleteOrderRequest(id)
+            .then((res) => {
+              fetchOrders();
+            })
+            .catch((err) => {
+              console.log(err.message);
+              const msgText = err.message.split("Error: ")[1];
+              Swal.fire("Error!", msgText, "error");
+            });
+        }
       })
       .catch((err) => {
         console.log(err.message);
@@ -73,7 +92,7 @@ const PlacedOrderRequest = () => {
                   class="rounded-lg shadow-lg bg-white max-w-m"
                   style={{
                     height: "170px",
-                    width: "800px",
+                    width: "920px",
                     marginBottom: "50px",
                   }}>
                   <br />
@@ -81,7 +100,8 @@ const PlacedOrderRequest = () => {
                   <div style={{ display: "flex" }}>
                     <div>
                       <p style={{ marginLeft: "30px", paddingTop: "30px" }}>
-                        Order ID
+                        Order ID <br />
+                        {order._id}
                       </p>
 
                       <br />
@@ -95,20 +115,22 @@ const PlacedOrderRequest = () => {
 
                     <div style={{ display: "flex" }}>
                       <div style={{ marginLeft: "30px" }}>
-                        <p>Placed By : sample name</p>
+                        <p>Placed By : {order.managerID}</p>
                         <br />
-                        <p>Supplier : sample name</p>
+                        <p>Supplier : {order.supplierID}</p>
                         <br />
-                        <p>Order Status : Pending</p>
+                        <p>Order Status : {order.status}</p>
                         <br />
                       </div>
                       <div style={{ display: "flex" }}>
                         <div style={{ marginLeft: "150px", display: "flex" }}>
-                          <p style={{ paddingRight: "20px" }}>Sample Date</p>
+                          <p style={{ paddingRight: "20px" }}>
+                            {order.requiredDate}
+                          </p>
                           <UpdateOrderRequest order={order} />
                           <div
                             class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
-                            onClick={deleteOrder}>
+                            onClick={() => deleteOrder(order._id)}>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"

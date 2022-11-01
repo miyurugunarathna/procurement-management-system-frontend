@@ -18,6 +18,15 @@ const getOrdersforManager = async () => {
   }
 };
 
+const getOrders = async () => {
+  try {
+    const response = await apiInstance.get(`/api/orderNew/`);
+    return response.data;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 const deleteOrderRequest = async (orderID) => {
   try {
     const response = await apiInstance.delete(`/api/orderNew/${orderID}`);
@@ -41,6 +50,7 @@ const orderRequest = {
   getOrdersforManager,
   updateOrderRequest,
   deleteOrderRequest,
+  getOrders,
 };
 
 export default orderRequest;
