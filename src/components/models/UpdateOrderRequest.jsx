@@ -1,7 +1,89 @@
 import React, { useState, useEffect } from "react";
+import supplierRequest from "../../api/Supplier/supplier.request";
+import orderRequest from "../../api/Order/order.request";
+import Swal from "sweetalert2";
 
-const UpdateOrderRequest = () => {
+const UpdateOrderRequest = ({ order }) => {
   const [showModal, setShowModal] = React.useState(false);
+  const [orderType, setorderType] = useState("");
+  const [itemName, setitemName] = useState("");
+  const [measuringUnit, setmeasuringUnit] = useState("");
+  const [quantity, setquantity] = useState(0);
+  const [description, setdescription] = useState("");
+  const [supplierID, setsupplierID] = useState("");
+  const [requiredDate, setrequiredDate] = useState("");
+  const [allsuppliers, setAllSuppliers] = useState([]);
+
+  useEffect(() => {
+    supplierRequest.getSuppliers().then((res) => {
+      console.log(res.data);
+      setAllSuppliers(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    if ({ order }) {
+      setquantity(order.quantity);
+      setdescription(order.description);
+      setsupplierID(order.supplierID);
+      setitemName(order.itemName);
+      setrequiredDate(order.requiredDate);
+      setorderType(order.orderType);
+      setmeasuringUnit(order.measuringUnit);
+    }
+  }, []);
+
+  const fetchOrder = () => {
+    orderRequest
+      .getOrdersforManager()
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    orderRequest
+      .updateOrderRequest(
+        {
+          orderType,
+          itemName,
+          measuringUnit,
+          quantity,
+          description,
+          supplierID,
+          requiredDate,
+        },
+        order._id,
+      )
+      .then((res) => {
+        console.log(res);
+        Swal.fire(
+          `Purchase Order Created Successfully!`,
+          "Click Ok to continue",
+          "success",
+        );
+        clear();
+        fetchOrder();
+      })
+      .catch((err) => {
+        Swal.fire("Error!", "Something went wrong", "error");
+      });
+  };
+
+  const clear = () => {
+    setquantity(0);
+    setdescription("");
+    setsupplierID("");
+    setitemName("");
+    setrequiredDate("");
+    setorderType("");
+    setmeasuringUnit("");
+  };
   return (
     <>
       <div
@@ -43,23 +125,22 @@ const UpdateOrderRequest = () => {
 
                 <div class="flex items-center justify-center p-12">
                   <div class="w-full px-3 " style={{ width: "500px" }}>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div class="mb-3">
                         <label
                           for="guest"
                           class="mb-3 block text-base font-medium text-[#07074D]">
-                          Morning
+                          Order Type
                         </label>
                         <select
                           id="countries"
                           class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          required>
-                          <option value="Select">Select </option>
-                          <option value="1 table spoon">1 table spoon</option>
-                          <option value="2 table spoon">2 table spoon</option>
-                          <option value="1 tablet">1 tablet</option>
-                          <option value="2 tablet">2 tablet</option>
-                          <option value="none">none</option>
+                          required
+                          onChange={(e) => setorderType(e.target.value)}>
+                          <option selected>select</option>
+                          <option value="Delivery">Delivery</option>
+                          <option value="Manufacture">Manufacture</option>
+                          <option value="Retail">Retail</option>
                         </select>
                       </div>
 
@@ -68,7 +149,7 @@ const UpdateOrderRequest = () => {
                           <label
                             for="hobby"
                             class="mb-3 block text-base font-medium text-[#07074D]">
-                            Medicine Name
+                            Item Name
                           </label>
                           <input
                             type="text"
@@ -76,6 +157,45 @@ const UpdateOrderRequest = () => {
                             id="hobby"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             required
+                            value={itemName}
+                            onChange={(e) => setitemName(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label
+                          for="guest"
+                          class="mb-3 block text-base font-medium text-[#07074D]">
+                          Measuring Unit
+                        </label>
+                        <select
+                          id="countries"
+                          class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required
+                          onChange={(e) => setmeasuringUnit(e.target.value)}>
+                          <option selected>select</option>
+                          <option value="Kg">Killogram(Kg)</option>
+                          <option value="g">gram(g)</option>
+                        </select>
+                      </div>
+
+                      <div class="w-full">
+                        <div class="mb-3">
+                          <label
+                            for="hobby"
+                            class="mb-3 block text-base font-medium text-[#07074D]">
+                            Qantity
+                          </label>
+                          <input
+                            type="number"
+                            name="hobby"
+                            id="hobby"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                            required
+                            placeholder="Enter Qantity"
+                            value={quantity}
+                            onChange={(e) => setquantity(e.target.value)}
                           />
                         </div>
                       </div>
@@ -84,35 +204,51 @@ const UpdateOrderRequest = () => {
                         <label
                           for="message"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                          Your message
+                          Description
                         </label>
                         <textarea
                           id="message"
                           rows="4"
                           class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="Your message..."></textarea>
+                          placeholder="Enter a Description"
+                          value={description}
+                          onChange={(e) =>
+                            setdescription(e.target.value)
+                          }></textarea>
                       </div>
 
                       <div class="mb-3">
                         <label
                           for="guest"
                           class="mb-3 block text-base font-medium text-[#07074D]">
-                          Morning
+                          Supplier
                         </label>
                         <select
                           id="countries"
                           class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          required>
-                          <option value="Select">Select </option>
-                          <option value="1 table spoon">1 table spoon</option>
-                          <option value="2 table spoon">2 table spoon</option>
-                          <option value="1 tablet">1 tablet</option>
-                          <option value="2 tablet">2 tablet</option>
-                          <option value="none">none</option>
+                          required
+                          onChange={(e) => setsupplierID(e.target.value)}>
+                          <option selected>Open this select menu</option>
+                          {!allsuppliers.length ? (
+                            <option value="none">
+                              No Supplier ID's Available
+                            </option>
+                          ) : (
+                            allsuppliers.map((supplier) => (
+                              <option value={supplier._id} key={supplier._id}>
+                                {supplier._id}
+                              </option>
+                            ))
+                          )}
                         </select>
                       </div>
 
                       <div class="relative mb-2">
+                        <label
+                          for="message"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                          Order Required Date
+                        </label>
                         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                           <svg
                             aria-hidden="true"
@@ -132,6 +268,8 @@ const UpdateOrderRequest = () => {
                           type="date"
                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           placeholder="Select date"
+                          value={requiredDate}
+                          onChange={(e) => setrequiredDate(e.target.value)}
                         />
                       </div>
 

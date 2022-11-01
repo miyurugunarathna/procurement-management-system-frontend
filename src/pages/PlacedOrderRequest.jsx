@@ -68,7 +68,7 @@ const PlacedOrderRequest = () => {
                 </div>
               </div>
             ) : (
-              orders.map((chi) => (
+              orders.map((order) => (
                 <div
                   class="rounded-lg shadow-lg bg-white max-w-m"
                   style={{
@@ -105,7 +105,7 @@ const PlacedOrderRequest = () => {
                       <div style={{ display: "flex" }}>
                         <div style={{ marginLeft: "150px", display: "flex" }}>
                           <p style={{ paddingRight: "20px" }}>Sample Date</p>
-                          <UpdateOrderRequest />
+                          <UpdateOrderRequest order={order} />
                           <div
                             class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                             onClick={deleteOrder}>
