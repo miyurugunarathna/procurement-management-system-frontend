@@ -8,22 +8,23 @@ const addUser = async (user) => {
     return err.response;
   }
 };
-// const getAllUsers = async () => {
-//   try {
-//     const response = await apiInstance.get(`api/user/`);
-//     return response.data;
-//   } catch (err) {
-//     return err.response;
-//   }
-// };
-// const updateUser = async (user, userID) => {
-//   try {
-//     const response = await apiInstance.put(`api/user/${userID}`, user);
-//     return response.data;
-//   } catch (err) {
-//     return err.response;
-//   }
-// };
+const getAllUsers = async () => {
+  try {
+    const response = await apiInstance.get(`/api/user/`);
+    return response.data;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+const updateUser = async (user, userID) => {
+  try {
+    const response = await apiInstance.put(`/api/user/${userID}`, user);
+    return response.data;
+  } catch (err) {
+    return err.response;
+  }
+};
 
 const login = async (loginCredentials) => {
   try {
@@ -71,25 +72,25 @@ const viewProfile = async () => {
 //   }
 // };
 
-// const deleteUser = async (userID) => {
-//   try {
-//     const response = await apiInstance.delete(`api/user/${userID}`);
-//     return response.data;
-//   } catch (err) {
-//     return err.response;
-//   }
-// };
+const deleteUser = async (userID) => {
+  try {
+    const response = await apiInstance.delete(`/api/user/${userID}`);
+    return response.data;
+  } catch (err) {
+    return err.response;
+  }
+};
 
 const userRequest = {
-  // getAllUsers,
+  getAllUsers,
   // getOneUser,
   addUser,
   login,
   logout,
   authHeader,
   viewProfile,
-  // updateUser,
-  // deleteUser,
+  updateUser,
+  deleteUser,
 };
 
 export default userRequest;

@@ -45,12 +45,22 @@ const updateOrderRequest = async (order, orderID) => {
   }
 };
 
+const getOrdersforSupplier = async () => {
+  try {
+    const response = await apiInstance.get(`/api/orderNew/supplier/`);
+    return response.data;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 const orderRequest = {
   saveOrderRequest,
   getOrdersforManager,
   updateOrderRequest,
   deleteOrderRequest,
   getOrders,
+  getOrdersforSupplier,
 };
 
 export default orderRequest;
