@@ -6,6 +6,7 @@ import Cover from "../assets/images/supply.jpg";
 import Swal from "sweetalert2";
 import AddDeliveryAdvice from "../components/models/AddDeliveryAdvice";
 import UpdateDeliveryAdvice from "../components/models/UpdateDeliveryAdvice";
+import SupplierSidebar from "../components/SupplierSidebar";
 
 const DeliveryAdvice = () => {
   const deleteOrder = () => {
@@ -31,7 +32,7 @@ const DeliveryAdvice = () => {
     <div>
       <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <Header />
-        <Sidebar />
+        <SupplierSidebar />
         <div
           class="h-full   pt-14 pb-14 md:ml-64"
           style={{
@@ -50,11 +51,11 @@ const DeliveryAdvice = () => {
                   <table class="min-w-max w-full table-auto">
                     <thead>
                       <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                        <th class="py-3 px-6 text-left">Delivery ID</th>
                         <th class="py-3 px-6 text-left">Order ID</th>
                         <th class="py-3 px-6 text-center">Delivery Items</th>
                         <th class="py-3 px-6 text-center">Delivered Date</th>
                         <th class="py-3 px-6 text-center">Quantity</th>
+                        <th class="py-3 px-6 text-center">description</th>
                         <th class="py-3 px-6 text-center">Actions</th>
                       </tr>
                     </thead>

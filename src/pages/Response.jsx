@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Cover from "../assets/images/supply.jpg";
 import orderRequest from "../api/Order/order.request";
+import AccountSidebar from "../components/AccountSidebar";
 
 const Response = () => {
   const [orders, setorders] = useState([]);
@@ -19,7 +20,7 @@ const Response = () => {
     <div>
       <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <Header />
-        <Sidebar />
+        <AccountSidebar />
         <div
           class="h-full   pt-14 pb-14 md:ml-64"
           style={{
@@ -50,8 +51,8 @@ const Response = () => {
                 <div
                   class="rounded-lg shadow-lg bg-white max-w-m"
                   style={{
-                    height: "170px",
-                    width: "1050px",
+                    height: "260px",
+                    width: "1120px",
                     marginBottom: "50px",
                   }}>
                   <br />
@@ -68,7 +69,7 @@ const Response = () => {
                     <div
                       style={{
                         borderLeft: "6px solid black",
-                        height: "140px",
+                        height: "220px",
                         marginLeft: "50px",
                       }}></div>
 
@@ -77,6 +78,8 @@ const Response = () => {
                         <p>Placed By : {order.managerID}</p>
                         <br />
                         <p>Supplier : {order.supplierID}</p>
+                        <br />
+                        <p>Approval Status : {order.approval}</p>
                         <br />
                         <p>Delivery Status : {order.available}</p>
                         <br />

@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import Cover from "../assets/images/supply.jpg";
 import UpdateStatusModel from "../components/models/UpdateStatus";
 import orderRequest from "../api/Order/order.request";
+import AccountSidebar from "../components/AccountSidebar";
 
 const Request = () => {
   const [orders, setorders] = useState([]);
@@ -20,7 +21,7 @@ const Request = () => {
     <div>
       <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <Header />
-        <Sidebar />
+        <AccountSidebar />
         <div
           class="h-full   pt-14 pb-14 md:ml-64"
           style={{
@@ -51,7 +52,7 @@ const Request = () => {
                 <div
                   class="rounded-lg shadow-lg bg-white max-w-m"
                   style={{
-                    height: "170px",
+                    height: "200px",
                     width: "950px",
                     marginBottom: "50px",
                   }}>
@@ -69,7 +70,7 @@ const Request = () => {
                     <div
                       style={{
                         borderLeft: "6px solid black",
-                        height: "140px",
+                        height: "160px",
                         marginLeft: "50px",
                       }}></div>
 

@@ -91,7 +91,7 @@ const PlacedOrderRequest = () => {
                 <div
                   class="rounded-lg shadow-lg bg-white max-w-m"
                   style={{
-                    height: "170px",
+                    height: "200px",
                     width: "920px",
                     marginBottom: "50px",
                   }}>
@@ -109,7 +109,7 @@ const PlacedOrderRequest = () => {
                     <div
                       style={{
                         borderLeft: "6px solid black",
-                        height: "140px",
+                        height: "160px",
                         marginLeft: "50px",
                       }}></div>
 

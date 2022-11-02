@@ -20,18 +20,21 @@ export const Login = () => {
 
   useEffect(() => {
     if (state.isLoggedIn) {
-      switch (String(state.user?.role).toLowerCase()) {
-        case "SITE_MANAGER":
-          navigate("/orderRequest");
-          break;
-        case "PROCUREMENT":
+      switch (String(state.user?.role)) {
+        case "PROCUREMENTSTAFF":
           navigate("/request");
           break;
-        case "SENIOR":
-          navigate("/request");
+        case "SITEMANAGER":
+          navigate("/order");
+          break;
+        case "SUPPLIER":
+          navigate("/deliveryStatus");
+          break;
+        case "ADMIN":
+          navigate("/users");
           break;
         default:
-          navigate("/order");
+          navigate("/home");
       }
     }
   }, [state.isLoggedIn]);

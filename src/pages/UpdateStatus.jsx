@@ -5,14 +5,15 @@ import Sidebar from "../components/Sidebar";
 import Cover from "../assets/images/supply.jpg";
 import UpdateDeliveryStatus from "../components/models/UpdateDeliveryStatus";
 import orderRequest from "../api/Order/order.request";
+import SupplierSidebar from "../components/SupplierSidebar";
 
 const UpdateStatus = () => {
   const [orders, setorders] = useState([]);
 
   useEffect(() => {
     orderRequest.getOrdersforSupplier().then((res) => {
-      console.log(res);
-      // setorders(res.data);
+      console.log(res.data);
+      setorders(res.data);
     });
   }, []);
 
@@ -20,7 +21,7 @@ const UpdateStatus = () => {
     <div>
       <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <Header />
-        <Sidebar />
+        <SupplierSidebar />
         <div
           class="h-full   pt-14 pb-14 md:ml-64"
           style={{
@@ -32,44 +33,67 @@ const UpdateStatus = () => {
           <div
             class="flex justify-center"
             style={{ marginRight: "40px", display: "grid" }}>
-            <div
-              class="rounded-lg shadow-lg bg-white max-w-m"
-              style={{ height: "170px", width: "800px", marginBottom: "50px" }}>
-              <br />
-
-              <div style={{ display: "flex" }}>
-                <div>
-                  <p style={{ marginLeft: "30px", paddingTop: "30px" }}>
-                    Order ID
-                  </p>
-
-                  <br />
-                </div>
+            {!orders.length ? (
+              <div style={{ width: "1300px" }}>
                 <div
                   style={{
-                    borderLeft: "6px solid black",
-                    height: "140px",
-                    marginLeft: "50px",
-                  }}></div>
-
-                <div style={{ display: "flex" }}>
-                  <div style={{ marginLeft: "30px" }}>
-                    <p>Placed By : sample name</p>
-                    <br />
-                    <p>Supplier : sample name</p>
-                    <br />
-                    <p>Delivery Status : Pending</p>
-                    <br />
-                  </div>
-                  <div style={{ marginLeft: "150px" }}>
-                    <p>Order Created Date : date</p>
-                    <br />
-                    <UpdateDeliveryStatus />
-                    <br />
-                  </div>
+                    background: "lightblue",
+                    marginLeft: "150px",
+                    marginTop: "150px",
+                    paddingLeft: "20px",
+                    paddingRight: "20px",
+                  }}>
+                  <h4>No Order Purchase Created !</h4>
+                  <p>No Orders Were Found.</p>
                 </div>
               </div>
-            </div>
+            ) : (
+              orders.map((order) => (
+                <div
+                  class="rounded-lg shadow-lg bg-white max-w-m"
+                  style={{
+                    height: "220px",
+                    width: "1100px",
+                    marginBottom: "50px",
+                  }}>
+                  <br />
+
+                  <div style={{ display: "flex" }}>
+                    <div>
+                      <p style={{ marginLeft: "30px", paddingTop: "30px" }}>
+                        Order ID <br />
+                        <p>{order._id}</p>
+                      </p>
+
+                      <br />
+                    </div>
+                    <div
+                      style={{
+                        borderLeft: "6px solid black",
+                        height: "170px",
+                        marginLeft: "50px",
+                      }}></div>
+
+                    <div style={{ display: "flex" }}>
+                      <div style={{ marginLeft: "30px" }}>
+                        <p>Placed By : {order.managerID}</p>
+                        <br />
+                        <p>Supplier : {order.supplierID}</p>
+                        <br />
+                        <p>Delivery Status : {order.available}</p>
+                        <br />
+                      </div>
+                      <div style={{ marginLeft: "150px" }}>
+                        <p>Order Created Date : {order.requiredDate}</p>
+                        <br />
+                        <UpdateDeliveryStatus order={order} />
+                        <br />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
             <br />
           </div>
         </div>

@@ -8,6 +8,7 @@ import AddDeliveryAdvice from "../components/models/AddDeliveryAdvice";
 import UpdateDeliveryAdvice from "../components/models/UpdateDeliveryAdvice";
 import userRequest from "../api/User/user.request";
 import UpdateUser from "../components/models/updateUser";
+import AdminSidebar from "../components/AdminSidebar";
 
 const Users = () => {
   const [users, setusers] = useState([]);
@@ -61,7 +62,7 @@ const Users = () => {
     <div>
       <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <Header />
-        <Sidebar />
+        <AdminSidebar />
         <div
           class="h-full   pt-14 pb-14 md:ml-64"
           style={{
@@ -137,7 +138,7 @@ const Users = () => {
                             </td>
                             <td class="py-3 px-6">
                               <div class="flex item-center justify-center">
-                                <UpdateUser />
+                                <UpdateUser user={user} />
 
                                 <div
                                   class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"

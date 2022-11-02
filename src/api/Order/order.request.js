@@ -26,6 +26,14 @@ const getOrders = async () => {
     return err.response;
   }
 };
+const getOrder = async (orderID) => {
+  try {
+    const response = await apiInstance.get(`/api/orderNew/${orderID}`);
+    return response.data;
+  } catch (err) {
+    return err.response;
+  }
+};
 
 const deleteOrderRequest = async (orderID) => {
   try {
@@ -61,6 +69,7 @@ const orderRequest = {
   deleteOrderRequest,
   getOrders,
   getOrdersforSupplier,
+  getOrder,
 };
 
 export default orderRequest;
