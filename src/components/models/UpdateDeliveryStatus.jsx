@@ -1,7 +1,82 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import orderRequest from "../../api/Order/order.request";
 
-const UpdateDeliveryStatus = () => {
+const UpdateDeliveryStatus = ({ order }) => {
   const [showModal, setShowModal] = React.useState(false);
+  const [available, setavailable] = useState("");
+  const [deliveredDate, setdeliveredDate] = useState("");
+  const [rejectionNote, setrejectionNote] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (
+      available === "SHORTAGE IN AVAILABLE PRODUCT" ||
+      available === "PRODUCT NOT AVAILABLE" ||
+      available === "REJECT"
+    ) {
+      orderRequest
+        .updateOrderRequest(
+          {
+            available,
+            rejectionNote,
+          },
+          order._id,
+        )
+        .then((res) => {
+          console.log(res);
+          Swal.fire(
+            `Purchase Order Created Successfully!`,
+            "Click Ok to continue",
+            "success",
+          );
+        })
+        .catch((err) => {
+          Swal.fire("Error!", "Something went wrong", "error");
+        });
+    } else if (deliveredDate) {
+      orderRequest
+        .updateOrderRequest(
+          {
+            available,
+            deliveredDate,
+          },
+          order._id,
+        )
+        .then((res) => {
+          console.log(res);
+          Swal.fire(
+            `Purchase Order Created Successfully!`,
+            "Click Ok to continue",
+            "success",
+          );
+        })
+        .catch((err) => {
+          Swal.fire("Error!", "Something went wrong", "error");
+        });
+    } else {
+      orderRequest
+        .updateOrderRequest(
+          {
+            available,
+          },
+          order._id,
+        )
+        .then((res) => {
+          console.log(res);
+          Swal.fire(
+            `Purchase Order Created Successfully!`,
+            "Click Ok to continue",
+            "success",
+          );
+        })
+        .catch((err) => {
+          Swal.fire("Error!", "Something went wrong", "error");
+        });
+    }
+  };
+
   return (
     <>
       <button
@@ -33,25 +108,128 @@ const UpdateDeliveryStatus = () => {
 
                 <div class="flex items-center justify-center p-12">
                   <div class="w-full px-3 " style={{ width: "500px" }}>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div class="mb-3">
                         <label
                           for="guest"
                           class="mb-3 block text-base font-medium text-[#07074D]">
-                          Morning
+                          Update Delivery Status
                         </label>
                         <select
                           id="countries"
                           class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          required>
+                          required
+                          onChange={(e) => setavailable(e.target.value)}>
                           <option value="Select">Select </option>
-                          <option value="1 table spoon">1 table spoon</option>
-                          <option value="2 table spoon">2 table spoon</option>
-                          <option value="1 tablet">1 tablet</option>
-                          <option value="2 tablet">2 tablet</option>
-                          <option value="none">none</option>
+                          <option value="PENDING">PENDING</option>
+                          <option value="PRODUCT NOT AVAILABLE">
+                            PRODUCT NOT AVAILABLE
+                          </option>
+                          <option value="DELIVERED">DELIVERED</option>
+                          <option value="REJECT">REJECT</option>
+                          <option value="SHORTAGE IN AVAILABLE PRODUCT">
+                            SHORTAGE IN AVAILABLE PRODUCT
+                          </option>
                         </select>
                       </div>
+
+                      {available === "DELIVERED" && (
+                        <>
+                          <div class="relative">
+                            <label
+                              for="message"
+                              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                              Delivered Date
+                            </label>
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                              <svg
+                                aria-hidden="true"
+                                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                  clip-rule="evenodd"></path>
+                              </svg>
+                            </div>
+                            <input
+                              datepicker
+                              datepicker-format="mm/dd/yyyy"
+                              type="date"
+                              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="Select date"
+                              value={deliveredDate}
+                              onChange={(e) => setdeliveredDate(e.target.value)}
+                            />
+                          </div>
+                          <br />
+                        </>
+                      )}
+
+                      {available === "SHORTAGE IN AVAILABLE PRODUCT" && (
+                        <>
+                          <div class="mb-4">
+                            <label
+                              for="message"
+                              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                              Description
+                            </label>
+                            <textarea
+                              id="message"
+                              rows="4"
+                              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="Enter a Description"
+                              value={rejectionNote}
+                              onChange={(e) =>
+                                setrejectionNote(e.target.value)
+                              }></textarea>
+                          </div>
+                        </>
+                      )}
+
+                      {available === "PRODUCT NOT AVAILABLE" && (
+                        <>
+                          <div class="mb-4">
+                            <label
+                              for="message"
+                              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                              Description
+                            </label>
+                            <textarea
+                              id="message"
+                              rows="4"
+                              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="Enter a Description"
+                              value={rejectionNote}
+                              onChange={(e) =>
+                                setrejectionNote(e.target.value)
+                              }></textarea>
+                          </div>
+                        </>
+                      )}
+
+                      {available === "REJECT" && (
+                        <>
+                          <div class="mb-4">
+                            <label
+                              for="message"
+                              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                              Description
+                            </label>
+                            <textarea
+                              id="message"
+                              rows="4"
+                              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="Enter a Description"
+                              value={rejectionNote}
+                              onChange={(e) =>
+                                setrejectionNote(e.target.value)
+                              }></textarea>
+                          </div>
+                        </>
+                      )}
 
                       <div className="flex">
                         <button

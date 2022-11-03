@@ -9,6 +9,11 @@ import DeliveryAdvice from "./pages/DeliveryAdvice";
 import Payment from "./pages/Payment";
 import Request from "./pages/Request";
 import { Register, Login } from "./pages";
+import Users from "./pages/Users";
+import AddSuppliers from "./pages/AddSuppliers";
+import Home from "./pages/Home";
+import AboutUs from "./pages/AboutUs";
+import Terms from "./pages/Terms";
 
 const App = () => {
   return (
@@ -23,7 +28,12 @@ const App = () => {
         <Route path="/deliveryAdvice" element={<DeliveryAdvice />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/users" element={<Users />} />
         <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/term" element={<Terms />} />
+        <Route path="/addSupplier" element={<AddSuppliers />} />
       </Routes>
     </Router>
   );

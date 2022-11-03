@@ -4,13 +4,24 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Cover from "../assets/images/supply.jpg";
 import UpdateStatusModel from "../components/models/UpdateStatus";
+import orderRequest from "../api/Order/order.request";
+import AccountSidebar from "../components/AccountSidebar";
 
 const Request = () => {
+  const [orders, setorders] = useState([]);
+
+  useEffect(() => {
+    orderRequest.getOrders().then((res) => {
+      console.log(res.data);
+      setorders(res.data);
+    });
+  }, []);
+
   return (
     <div>
       <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <Header />
-        <Sidebar />
+        <AccountSidebar />
         <div
           class="h-full   pt-14 pb-14 md:ml-64"
           style={{
@@ -22,120 +33,66 @@ const Request = () => {
           <div
             class="flex justify-center"
             style={{ marginRight: "40px", display: "grid" }}>
-            <div
-              class="rounded-lg shadow-lg bg-white max-w-m"
-              style={{ height: "170px", width: "800px", marginBottom: "50px" }}>
-              <br />
-
-              <div style={{ display: "flex" }}>
-                <div>
-                  <p style={{ marginLeft: "30px", paddingTop: "30px" }}>
-                    Order ID
-                  </p>
-
-                  <br />
-                </div>
+            {!orders.length ? (
+              <div style={{ width: "1300px" }}>
                 <div
                   style={{
-                    borderLeft: "6px solid black",
-                    height: "140px",
-                    marginLeft: "50px",
-                  }}></div>
-
-                <div style={{ display: "flex" }}>
-                  <div style={{ marginLeft: "30px" }}>
-                    <p>Placed By : sample name</p>
-                    <br />
-                    <p>Supplier : sample name</p>
-                    <br />
-                    <p>Order Status : Pending</p>
-                    <br />
-                  </div>
-                  <div style={{ marginLeft: "150px" }}>
-                    <p>Sample Date</p>
-                    <br />
-                    <UpdateStatusModel />
-                  </div>
+                    background: "lightblue",
+                    marginLeft: "150px",
+                    marginTop: "150px",
+                    paddingLeft: "20px",
+                    paddingRight: "20px",
+                  }}>
+                  <h4>No Order Purchase Created !</h4>
+                  <p>No Orders Were Found.</p>
                 </div>
               </div>
-            </div>
-            <br />
-
-            <div
-              class="rounded-lg shadow-lg bg-white max-w-m"
-              style={{ height: "170px", width: "800px", marginBottom: "50px" }}>
-              <br />
-
-              <div style={{ display: "flex" }}>
-                <div>
-                  <p style={{ marginLeft: "30px", paddingTop: "30px" }}>
-                    Order ID
-                  </p>
-
-                  <br />
-                </div>
+            ) : (
+              orders.map((order) => (
                 <div
+                  class="rounded-lg shadow-lg bg-white max-w-m"
                   style={{
-                    borderLeft: "6px solid black",
-                    height: "140px",
-                    marginLeft: "50px",
-                  }}></div>
-
-                <div style={{ display: "flex" }}>
-                  <div style={{ marginLeft: "30px" }}>
-                    <p>Placed By : sample name</p>
-                    <br />
-                    <p>Supplier : sample name</p>
-                    <br />
-                    <p>Order Status : Pending</p>
-                    <br />
-                  </div>
-                  <div style={{ marginLeft: "150px" }}>
-                    <p>Sample Date</p>
-                    <br />
-                    <UpdateStatusModel />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="rounded-lg shadow-lg bg-white max-w-m"
-              style={{ height: "170px", width: "800px", marginBottom: "50px" }}>
-              <br />
-
-              <div style={{ display: "flex" }}>
-                <div>
-                  <p style={{ marginLeft: "30px", paddingTop: "30px" }}>
-                    Order ID
-                  </p>
-
+                    height: "200px",
+                    width: "950px",
+                    marginBottom: "50px",
+                  }}>
                   <br />
-                </div>
-                <div
-                  style={{
-                    borderLeft: "6px solid black",
-                    height: "140px",
-                    marginLeft: "50px",
-                  }}></div>
 
-                <div style={{ display: "flex" }}>
-                  <div style={{ marginLeft: "30px" }}>
-                    <p>Placed By : sample name</p>
-                    <br />
-                    <p>Supplier : sample name</p>
-                    <br />
-                    <p>Order Status : Pending</p>
-                    <br />
-                  </div>
-                  <div style={{ marginLeft: "150px" }}>
-                    <p>Sample Date</p>
-                    <br />
-                    <UpdateStatusModel />
+                  <div style={{ display: "flex" }}>
+                    <div>
+                      <p style={{ marginLeft: "30px", paddingTop: "30px" }}>
+                        Order ID <br />
+                        {order._id}
+                      </p>
+
+                      <br />
+                    </div>
+                    <div
+                      style={{
+                        borderLeft: "6px solid black",
+                        height: "160px",
+                        marginLeft: "50px",
+                      }}></div>
+
+                    <div style={{ display: "flex" }}>
+                      <div style={{ marginLeft: "30px" }}>
+                        <p>Placed By : {order.managerID}</p>
+                        <br />
+                        <p>Supplier : {order.supplierID}</p>
+                        <br />
+                        <p>Order Status : {order.approval}</p>
+                        <br />
+                      </div>
+                      <div style={{ marginLeft: "150px" }}>
+                        <p>{order.requiredDate}</p>
+                        <br />
+                        <UpdateStatusModel order={order} />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              ))
+            )}
           </div>
         </div>
       </div>

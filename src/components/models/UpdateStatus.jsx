@@ -1,7 +1,46 @@
 import React, { useState, useEffect } from "react";
+import orderRequest from "../../api/Order/order.request";
+import Swal from "sweetalert2";
 
-const UpdateStatusModel = () => {
+const UpdateStatusModel = ({ order }) => {
   const [showModal, setShowModal] = React.useState(false);
+  const [approval, setapproval] = useState("");
+
+  const fetchOrder = () => {
+    orderRequest
+      .getOrders()
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    orderRequest
+      .updateOrderRequest(
+        {
+          approval,
+        },
+        order._id,
+      )
+      .then((res) => {
+        console.log(res);
+        Swal.fire(
+          `Purchase Order Created Successfully!`,
+          "Click Ok to continue",
+          "success",
+        );
+        fetchOrder();
+      })
+      .catch((err) => {
+        Swal.fire("Error!", "Something went wrong", "error");
+      });
+  };
+
   return (
     <>
       <button
@@ -18,9 +57,7 @@ const UpdateStatusModel = () => {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">
-                    Update Order Details
-                  </h3>
+                  <h3 className="text-3xl font-semibold">Approve Order</h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}>
@@ -33,23 +70,22 @@ const UpdateStatusModel = () => {
 
                 <div class="flex items-center justify-center p-12">
                   <div class="w-full px-3 " style={{ width: "500px" }}>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div class="mb-3">
                         <label
                           for="guest"
                           class="mb-3 block text-base font-medium text-[#07074D]">
-                          Morning
+                          Status
                         </label>
                         <select
                           id="countries"
                           class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          required>
+                          required
+                          onChange={(e) => setapproval(e.target.value)}>
                           <option value="Select">Select </option>
-                          <option value="1 table spoon">1 table spoon</option>
-                          <option value="2 table spoon">2 table spoon</option>
-                          <option value="1 tablet">1 tablet</option>
-                          <option value="2 tablet">2 tablet</option>
-                          <option value="none">none</option>
+                          <option value="PENDING">PENDING</option>
+                          <option value="REJECTED">REJECTED</option>
+                          <option value="APPROVED">APPROVED</option>
                         </select>
                       </div>
 

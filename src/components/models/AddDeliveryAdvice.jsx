@@ -1,7 +1,36 @@
+import { Description } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import orderRequest from "../../api/Order/order.request";
 
 const AddDeliveryAdvice = () => {
   const [showModal, setShowModal] = React.useState(false);
+
+  const [orderID, setorderID] = useState("");
+  const [deliveryItems, setdeliveryItems] = useState("");
+  const [deliveredDate, setdeliveredDate] = useState("");
+  const [quantity, setquantity] = useState("");
+  const [description, setdescription] = useState("");
+  const [supplierID, setsupplierID] = useState("");
+  const [managerID, setmanagerID] = useState("");
+  const [orders, setorders] = useState([]);
+
+  useEffect(() => {
+    orderRequest.getOrdersforSupplier().then((res) => {
+      //console.log(res.data);
+      setorders(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (orderID) {
+      orderRequest.getOrder(orderID).then((res) => {
+        console.log(res);
+        // setorders(res.data);
+      });
+    }
+  }, []);
+
   return (
     <>
       <button
@@ -39,35 +68,51 @@ const AddDeliveryAdvice = () => {
                         <label
                           for="guest"
                           class="mb-3 block text-base font-medium text-[#07074D]">
-                          Morning
+                          Order ID
                         </label>
                         <select
                           id="countries"
                           class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          required>
+                          required
+                          onChange={(e) => setorderID(e.target.value)}>
                           <option value="Select">Select </option>
-                          <option value="1 table spoon">1 table spoon</option>
-                          <option value="2 table spoon">2 table spoon</option>
-                          <option value="1 tablet">1 tablet</option>
-                          <option value="2 tablet">2 tablet</option>
-                          <option value="none">none</option>
+                          {!orders.length ? (
+                            <option value="none">
+                              No Supplier ID's Available
+                            </option>
+                          ) : (
+                            orders.map((supplier) => (
+                              <option value={supplier._id} key={supplier._id}>
+                                {supplier._id}
+                              </option>
+                            ))
+                          )}
                         </select>
                       </div>
 
-                      <div class="mb-3">
+                      <div class="mb-4">
                         <label
                           for="message"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                          Your message
+                          Delivered Items
                         </label>
                         <textarea
                           id="message"
                           rows="4"
                           class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="Your message..."></textarea>
+                          placeholder="Enter a Description"
+                          value={deliveryItems}
+                          onChange={(e) =>
+                            setdeliveryItems(e.target.value)
+                          }></textarea>
                       </div>
 
-                      <div class="relative mb-2">
+                      <div class="relative">
+                        <label
+                          for="message"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                          Delivered Date
+                        </label>
                         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                           <svg
                             aria-hidden="true"
@@ -87,6 +132,8 @@ const AddDeliveryAdvice = () => {
                           type="date"
                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           placeholder="Select date"
+                          value={deliveredDate}
+                          onChange={(e) => setdeliveredDate(e.target.value)}
                         />
                       </div>
 
@@ -95,7 +142,7 @@ const AddDeliveryAdvice = () => {
                           <label
                             for="hobby"
                             class="mb-3 block text-base font-medium text-[#07074D]">
-                            Medicine Name
+                            Quantity
                           </label>
                           <input
                             type="number"
@@ -103,8 +150,27 @@ const AddDeliveryAdvice = () => {
                             id="hobby"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             required
+                            value={quantity}
+                            onChange={(e) => setquantity(e.target.value)}
                           />
                         </div>
+                      </div>
+
+                      <div class="mb-4">
+                        <label
+                          for="message"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                          Description
+                        </label>
+                        <textarea
+                          id="message"
+                          rows="4"
+                          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="Enter a Description"
+                          value={Description}
+                          onChange={(e) =>
+                            setdescription(e.target.value)
+                          }></textarea>
                       </div>
 
                       <div className="flex">
