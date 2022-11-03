@@ -86,7 +86,11 @@ const Users = () => {
                         <th class="py-3 px-6 text-left">Email</th>
                         <th class="py-3 px-6 text-center">Mobile</th>
                         <th class="py-3 px-6 text-center">Department</th>
-                        <th class="py-3 px-6 text-center">Role</th>
+                        <th
+                          class="py-3 px-6 text-center"
+                          style={{ width: "300px" }}>
+                          Role
+                        </th>
                         <th class="py-3 px-6 text-center">Actions</th>
                       </tr>
                     </thead>

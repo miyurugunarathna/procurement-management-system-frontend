@@ -128,14 +128,14 @@ const UpdateUser = ({ user }) => {
                             <label
                               for="guest"
                               class="mb-3 block text-base font-medium text-[#07074D]">
-                              Change Role
+                              Select Supplier
                             </label>
                             <select
                               id="countries"
                               class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                               required
                               onChange={(e) => setsupplier(e.target.value)}>
-                              <option selected>Open this select menu</option>
+                              <option selected>select supplier</option>
                               {!allsuppliers.length ? (
                                 <option value="none">
                                   No Supplier ID's Available

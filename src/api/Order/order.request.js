@@ -28,7 +28,7 @@ const getOrders = async () => {
 };
 const getOrder = async (orderID) => {
   try {
-    const response = await apiInstance.get(`/api/orderNew/${orderID}`);
+    const response = await apiInstance.get(`/api/orderNew/single/${orderID}`);
     return response.data;
   } catch (err) {
     return err.response;

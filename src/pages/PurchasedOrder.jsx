@@ -48,7 +48,7 @@ const PurchasedOrder = () => {
                 <div
                   class="rounded-lg shadow-lg bg-white max-w-m"
                   style={{
-                    height: "390px",
+                    height: "510px",
                     width: "300px",
                     textAlign: "center",
                     padding: "10px",
