@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Cover from "../assets/images/supply.jpg";
-import orderRequest from "../api/Order/order.request";
+import paymentReq from "../api/payment/payment.request";
 import deliveryAdvice from "../api/delivaryadvice/delivery.request";
 import Swal from "sweetalert2";
 
@@ -24,25 +24,21 @@ const Payment = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    orderRequest
-      .saveOrderRequest({
-        orderType,
-        itemName,
-        measuringUnit,
-        quantity,
-        description,
-        supplierID,
-        requiredDate,
+    console.log("Submit Call");
+    paymentReq
+      .savePayment({
+        paymentName: new Date() + totalPrice,
+        paymentType: "Regular",
+        paymentAmount: totalPrice,
+        paymentStatus: "Paid",
       })
       .then((res) => {
         console.log(res);
         Swal.fire(
-          `Purchase Order Created Successfully!`,
+          `Payment Created Successfully!`,
           "Click Ok to continue",
           "success",
         );
-        clear();
       })
       .catch((err) => {
         Swal.fire("Error!", "Something went wrong", "error");
@@ -94,7 +90,7 @@ const Payment = () => {
               <div>
                 <div class="col">
                   <center>
-                    <form onSubmit={""}>
+                    <form onSubmit={handleSubmit}>
                       <div>
                         <table
                           id="table"

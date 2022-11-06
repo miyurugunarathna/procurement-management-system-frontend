@@ -7,6 +7,7 @@ import PurchasedOrder from "./pages/PurchasedOrder";
 import UpdateStatus from "./pages/UpdateStatus";
 import DeliveryAdvice from "./pages/DeliveryAdvice";
 import Payment from "./pages/Payment";
+import PaymentHistory from "./pages/paymenthistory";
 import Request from "./pages/Request";
 import { Register, Login } from "./pages";
 import Users from "./pages/Users";
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/deliveryStatus" element={<UpdateStatus />} />
         <Route path="/deliveryAdvice" element={<DeliveryAdvice />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/paymentHistory" element={<PaymentHistory />} />
         <Route path="/register" element={<Register />} />
         <Route path="/users" element={<Users />} />
         <Route path="/" element={<Login />} />
