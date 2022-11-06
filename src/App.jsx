@@ -20,6 +20,7 @@ import DeliveryAdviceManager from "./pages/DeliveryAdviceManager";
 import PerchasedOrdersforAdmin from "./pages/PerchasedOrdersforAdmin";
 import ListDeliveryAdvice from "./pages/ListDeliveryAdvice";
 import PurchasedOrderAccount from "./pages/PurchasedOrderAccount";
+import PurchasedOrderSupplier from "./pages/purchasedOrderSupplier";
 
 const App = () => {
   return (
@@ -46,6 +47,7 @@ const App = () => {
         <Route path="/adminOrder" element={<PerchasedOrdersforAdmin />} />
         <Route path="/accountDeliveryAdvice" element={<ListDeliveryAdvice />} />
         <Route path="/orderAccount" element={<PurchasedOrderAccount />} />
+        <Route path="/supplierOrder" element={<PurchasedOrderSupplier />} />
       </Routes>
     </Router>
   );
