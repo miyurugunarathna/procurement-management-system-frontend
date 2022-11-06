@@ -91,8 +91,8 @@ const PlacedOrderRequest = () => {
                 <div
                   class="rounded-lg shadow-lg bg-white max-w-m"
                   style={{
-                    height: "200px",
-                    width: "920px",
+                    height: "260px",
+                    width: "1000px",
                     marginBottom: "50px",
                   }}>
                   <br />
@@ -109,7 +109,7 @@ const PlacedOrderRequest = () => {
                     <div
                       style={{
                         borderLeft: "6px solid black",
-                        height: "160px",
+                        height: "230px",
                         marginLeft: "50px",
                       }}></div>
 
@@ -120,6 +120,8 @@ const PlacedOrderRequest = () => {
                         <p>Supplier : {order.supplierID}</p>
                         <br />
                         <p>Order Status : {order.status}</p>
+                        <br />
+                        <p>Delivery Status : {order.available}</p>
                         <br />
                       </div>
                       <div style={{ display: "flex" }}>
