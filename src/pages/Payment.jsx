@@ -109,7 +109,6 @@ const Payment = () => {
                               <th>quantity</th>
                               <th>Unit Price (Rs.)</th>
                               <th>Total (Rs.)</th>
-
                             </tr>
                           </thead>
                           <tbody>
@@ -146,18 +145,21 @@ const Payment = () => {
                     <div>
                       {totalPrice ? (
                         <div>
-                        <div><h3>Total Price (Rs.) = {totalPrice}</h3></div><br/>
-                        <button
-                          onClick={() => handleSubmit()}
-                          className="btn btn-primary btn-block">
-                          Settle the Payment
-                        </button>
+                          <div>
+                            <h3>Total Price (Rs.) = {totalPrice}</h3>
+                          </div>
+                          <br />
+                          <button
+                            onClick={() => handleSubmit()}
+                            className="btn btn-primary btn-block">
+                            Settle the Payment
+                          </button>
                         </div>
                       ) : (
                         <h4></h4>
                       )}
                     </div>
-                    <br/>
+                    <br />
                   </center>
                 </div>
               </div>
@@ -165,7 +167,7 @@ const Payment = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
