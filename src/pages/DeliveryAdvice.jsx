@@ -7,8 +7,16 @@ import Swal from "sweetalert2";
 import AddDeliveryAdvice from "../components/models/AddDeliveryAdvice";
 import UpdateDeliveryAdvice from "../components/models/UpdateDeliveryAdvice";
 import SupplierSidebar from "../components/SupplierSidebar";
+import deliveryRequest from "../api/delivaryadvice/delivery.request";
 
 const DeliveryAdvice = () => {
+  const [deliveries, setdeliveries] = useState([]);
+  useEffect(() => {
+    deliveryRequest.getdelivery().then((res) => {
+      //console.log(res.data);
+      setdeliveries(res.data);
+    });
+  }, []);
   const deleteOrder = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -51,70 +59,109 @@ const DeliveryAdvice = () => {
                   <table class="min-w-max w-full table-auto">
                     <thead>
                       <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                        <th class="py-3 px-6 text-left">Delivery ID</th>
                         <th class="py-3 px-6 text-left">Order ID</th>
                         <th class="py-3 px-6 text-center">Delivery Items</th>
                         <th class="py-3 px-6 text-center">Delivered Date</th>
                         <th class="py-3 px-6 text-center">Quantity</th>
+                        <th class="py-3 px-6 text-center">Unit Price</th>
+                        <th class="py-3 px-6 text-center">Total</th>
                         <th class="py-3 px-6 text-center">description</th>
+                        <th class="py-3 px-6 text-center">Manager ID</th>
                         <th class="py-3 px-6 text-center">Actions</th>
                       </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm font-light">
-                      <tr class="border-b border-gray-200 hover:bg-gray-100">
-                        <td class="py-3 px-6 text-left whitespace-nowrap">
-                          <div class="flex items-center">
-                            <div class="mr-2"></div>
-                            <span class="font-medium">test</span>
+                      {!deliveries.length ? (
+                        <div>
+                          <div>
+                            <h4>No Medical Details Added !</h4>
+                            <p>No Medical Details Were Found.</p>
                           </div>
-                        </td>
-                        <td class="py-3 px-6 text-left whitespace-nowrap">
-                          <div class="flex items-center">
-                            <div class="mr-2"></div>
-                            <span class="font-medium">test</span>
-                          </div>
-                        </td>
+                        </div>
+                      ) : (
+                        deliveries.map((chi) => (
+                          <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-left whitespace-nowrap">
+                              <div class="flex items-center">
+                                <div class="mr-2"></div>
+                                <span class="font-medium">{chi._id}</span>
+                              </div>
+                            </td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">
+                              <div class="flex items-center">
+                                <div class="mr-2"></div>
+                                <span class="font-medium">{chi.orderID}</span>
+                              </div>
+                            </td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">
+                              <div class="flex items-center">
+                                <div class="mr-2"></div>
+                                <span class="font-medium">
+                                  {chi.deliveryItems}
+                                </span>
+                              </div>
+                            </td>
 
-                        <td class="py-3 px-6 text-left whitespace-nowrap">
-                          <div class="flex items-center">
-                            <div class="mr-2"></div>
-                            <span class="font-medium">test</span>
-                          </div>
-                        </td>
-                        <td class="py-3 px-6 text-left whitespace-nowrap">
-                          <div class="flex items-center">
-                            <div class="mr-2"></div>
-                            <span class="font-medium">test</span>
-                          </div>
-                        </td>
-                        <td class="py-3 px-6 text-left whitespace-nowrap">
-                          <div class="flex items-center">
-                            <div class="mr-2"></div>
-                            <span class="font-medium">test</span>
-                          </div>
-                        </td>
-                        <td class="py-3 px-6 ">
-                          <div class="flex item-center justify-center">
-                            <UpdateDeliveryAdvice />
+                            <td class="py-3 px-6 text-left whitespace-nowrap">
+                              <div class="flex items-center">
+                                <div class="mr-2"></div>
+                                <span class="font-medium">
+                                  {chi.deliveredDate}
+                                </span>
+                              </div>
+                            </td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">
+                              <div class="flex items-center">
+                                <div class="mr-2"></div>
+                                <span class="font-medium">{chi.quantity}</span>
+                              </div>
+                            </td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">
+                              <div class="flex items-center">
+                                <div class="mr-2"></div>
+                                <span class="font-medium">100.00</span>
+                              </div>
+                            </td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">
+                              <div class="flex items-center">
+                                <div class="mr-2"></div>
+                                <span class="font-medium">
+                                  {chi.description}
+                                </span>
+                              </div>
+                            </td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">
+                              <div class="flex items-center">
+                                <div class="mr-2"></div>
+                                <span class="font-medium">{chi.managerID}</span>
+                              </div>
+                            </td>
+                            <td class="py-3 px-6 ">
+                              <div class="flex item-center justify-center">
+                                <UpdateDeliveryAdvice />
 
-                            <div
-                              class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
-                              onClick={deleteOrder}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                />
-                              </svg>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
+                                <div
+                                  class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                                  onClick={deleteOrder}>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                    />
+                                  </svg>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>

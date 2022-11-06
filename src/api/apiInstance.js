@@ -8,7 +8,7 @@ const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use(
   (config) => {
-    config.baseURL = url || "https://pms-92dm.onrender.com";
+    config.baseURL = "http://localhost:5000";
     config.headers = {
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     };

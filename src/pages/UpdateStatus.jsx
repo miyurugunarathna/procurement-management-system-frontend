@@ -13,7 +13,7 @@ const UpdateStatus = () => {
   useEffect(() => {
     orderRequest.getOrdersforSupplier().then((res) => {
       console.log(res.data);
-      setorders(res.data);
+      if (res?.data) setorders(res.data);
     });
   }, []);
 

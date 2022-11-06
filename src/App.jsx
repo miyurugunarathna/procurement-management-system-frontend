@@ -14,6 +14,8 @@ import AddSuppliers from "./pages/AddSuppliers";
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import Terms from "./pages/Terms";
+import AddProduct from "./pages/AddProduct";
+import ListProducts from "./pages/ListProducts";
 
 const App = () => {
   return (
@@ -34,6 +36,8 @@ const App = () => {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/term" element={<Terms />} />
         <Route path="/addSupplier" element={<AddSuppliers />} />
+        <Route path="/addProduct" element={<AddProduct />} />
+        <Route path="/Products" element={<ListProducts />} />
       </Routes>
     </Router>
   );

@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Cover from "../assets/images/supply.jpg";
-import orderRequest from "../api/Order/order.request";
+import productRequest from "../api/product/product.request";
+import SupplierSidebar from "../components/SupplierSidebar";
 
-const PurchasedOrder = () => {
+const ListProducts = () => {
   const [orders, setorders] = useState([]);
 
   useEffect(() => {
-    orderRequest.getOrders().then((res) => {
+    productRequest.getProductsForSupplier().then((res) => {
       console.log(res.data);
       setorders(res.data);
     });
@@ -19,7 +20,7 @@ const PurchasedOrder = () => {
     <div>
       <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <Header />
-        <Sidebar />
+        <SupplierSidebar />
         <div
           class="h-full   pt-14 pb-14 md:ml-64"
           style={{
@@ -52,22 +53,13 @@ const PurchasedOrder = () => {
                     width: "300px",
                     textAlign: "center",
                     padding: "10px",
-                  }}>
-                  <p>Order ID </p>
-                  <br />
-                  <p>{order._id}</p>
-                  <br />
-                  <p>Manager ID</p>
-                  <br />
-                  <p>{order.managerID}</p>
-                  <br />
-                  <p>Supplier ID</p>
-                  <br />
-                  <p>{order.supplierID}</p>
-                  <br />
-                  <p>Delivery Status</p>
-                  <br />
-                  <p>{order.available}</p>
+                  }}
+                  key={order._id}>
+                  <img
+                    class="w-full"
+                    src={order.image}
+                    alt="Sunset in the mountains"></img>
+                  <p>name</p>
                   <br />
                 </div>
               ))
@@ -79,4 +71,4 @@ const PurchasedOrder = () => {
   );
 };
 
-export default PurchasedOrder;
+export default ListProducts;
