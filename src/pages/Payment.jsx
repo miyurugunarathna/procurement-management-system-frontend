@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Cover from "../assets/images/supply.jpg";
 import orderRequest from "../api/Order/order.request";
+import deliveryAdvice from "../api/delivaryadvice/delivery.request";
 import Swal from "sweetalert2";
 
 const Payment = () => {
   const [orders, setorders] = useState([]);
+  const [totalPrice, setTotalPrice] = useState("");
 
   useEffect(() => {
     fetchOrders();
+    paymentCalculator();
   }, []);
 
   const fetchOrders = () => {
-    orderRequest.getOrdersforManager().then((res) => {
-      console.log(res.data);
+    deliveryAdvice.getdeliveryforManager().then((res) => {
       setorders(res.data);
+      console.log(orders);
+      paymentCalculator();
     });
   };
 
@@ -44,6 +47,18 @@ const Payment = () => {
       .catch((err) => {
         Swal.fire("Error!", "Something went wrong", "error");
       });
+  };
+
+  const paymentCalculator = () => {
+    console.log("PAYMENT CALCULATOR EXECUTE");
+    let total = 0;
+    orders.map((orders, i) => {
+      let key = i;
+      console.log("KEY: " + key);
+      console.log(orders.orderID);
+      total += orders.unitPrice * orders.quantity;
+    });
+    setTotalPrice(total);
   };
 
   return (
@@ -79,100 +94,70 @@ const Payment = () => {
               <div>
                 <div class="col">
                   <center>
-                    <h3>Bills</h3>
-                    <br />
                     <form onSubmit={""}>
                       <div>
-                        <div className="form-billItem">
-                          <input
-                            onChange={handleChange("childId")}
-                            value={childId}
-                            type="text"
-                            className="form-control"
-                            placeholder="Enter Child ID"
-                            required
-                          />
-                        </div>
-                        <br />
-                        <div>
-                          <button className="btn btn-primary btn-block">
-                            Create Bill
-                          </button>
-                        </div>
+                        <table
+                          id="table"
+                          class="table"
+                          responsive
+                          className="table table-hover"
+                          style={{ marginTop: "20px", marginLeft: "10px" }}>
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Item Name</th>
+                              <th>quantity</th>
+                              <th>Unit Price (Rs.)</th>
+                              <th>Total (Rs.)</th>
 
-                        <br />
-                        <br />
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {orders.map((orders, i) => (
+                              <tr key={i}>
+                                <th scope="row">{i + 1}</th>
 
-                        {totalBill ? (
-                          <div>
-                            <h4>
-                              <label className="text-muted">
-                                Child ID: {childIdNow}
-                              </label>
-                              <br /> <br />
-                              <label className="text-muted">
-                                Total Bill: Rs. {totalBill}
-                              </label>
-                            </h4>
-                            <table
-                              id="table"
-                              class="table"
-                              responsive
-                              className="table table-hover"
-                              style={{ marginTop: "40px", marginLeft: "20px" }}>
-                              <thead>
-                                <tr>
-                                  <th>#</th>
-                                  <th>Item Name</th>
-                                  <th>Total Price (Rs.)</th>
-                                  <th>Status</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {orders.map((orders, i) => (
-                                  <tr key={i}>
-                                    <th scope="row">{i + 1}</th>
-
-                                    <td>{orders.itemName}</td>
-                                    <td>{orders.quantity.toString()}</td>
-                                    <td>{orders.unitPrice.toString()}</td>
-                                    <td>
-                                      {(
-                                        orders.unitPrice * orders.quantity
-                                      ).toString()}
-                                    </td>
-                                    <td>
-                                      &nbsp;&nbsp;&nbsp;
-                                      <a
-                                        className=""
-                                        href="#"
-                                        onClick={() => deleteBill(bill._id)}>
-                                        <button
-                                          style={{ borderRadius: "25px" }}>
-                                          Delete
-                                        </button>
-                                      </a>
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        ) : (
-                          <h4>Please Proceed!</h4>
-                        )}
+                                <td>{orders.deliveryItems}</td>
+                                <td>{orders.quantity.toString()}</td>
+                                <td>{orders.unitPrice.toString()}</td>
+                                <td>
+                                  {(
+                                    orders.unitPrice * orders.quantity
+                                  ).toString()}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
                     </form>
                     <br />
-                    {totalBill ? (
-                      <button
-                        onClick={() => handleSubmit()}
-                        className="btn btn-primary btn-block">
-                        Save the Bill
-                      </button>
-                    ) : (
-                      <h4></h4>
-                    )}
+                    <div>
+                      {totalPrice ? (
+                        <h5></h5>
+                      ) : (
+                        <button
+                          onClick={() => paymentCalculator()}
+                          className="btn btn-primary btn-block">
+                          Check the Total Price
+                        </button>
+                      )}
+                    </div>
+                    <div>
+                      {totalPrice ? (
+                        <div>
+                        <div><h3>Total Price (Rs.) = {totalPrice}</h3></div><br/>
+                        <button
+                          onClick={() => handleSubmit()}
+                          className="btn btn-primary btn-block">
+                          Settle the Payment
+                        </button>
+                        </div>
+                      ) : (
+                        <h4></h4>
+                      )}
+                    </div>
+                    <br/>
                   </center>
                 </div>
               </div>
@@ -180,7 +165,7 @@ const Payment = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
