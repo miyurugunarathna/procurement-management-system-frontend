@@ -20,6 +20,13 @@ const AddDeliveryAdvice = () => {
   const [unitPrice, setunitprice] = useState(0);
   const [total, settotal] = useState(0);
 
+  const fetchDeliveryAdvice = () => {
+    deliveryRequest.getdelivery().then((res) => {
+      //console.log(res.data);
+      console.log(res);
+    });
+  };
+
   useEffect(() => {
     orderRequest.getOrdersforSupplier().then((res) => {
       //console.log(res.data);
@@ -55,10 +62,11 @@ const AddDeliveryAdvice = () => {
       .then((res) => {
         console.log(res);
         Swal.fire(
-          `Purchase Order Created Successfully!`,
+          `Delivery Advice Created Successfully!`,
           "Click Ok to continue",
           "success",
         );
+        fetchDeliveryAdvice();
       })
       .catch((err) => {
         Swal.fire("Error!", "Something went wrong", "error");
