@@ -17,6 +17,8 @@ const AddDeliveryAdvice = () => {
   const [managerID, setmanagerID] = useState("");
   const [orders, setorders] = useState([]);
   const [deliveries, setdeliveries] = useState([]);
+  const [unitPrice, setunitprice] = useState(0);
+  const [total, settotal] = useState(0);
 
   useEffect(() => {
     orderRequest.getOrdersforSupplier().then((res) => {
@@ -46,6 +48,8 @@ const AddDeliveryAdvice = () => {
         quantity,
         description,
         supplierID,
+        unitPrice,
+        total,
         managerID,
       })
       .then((res) => {
@@ -182,6 +186,44 @@ const AddDeliveryAdvice = () => {
                             required
                             value={quantity}
                             onChange={(e) => setquantity(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      <div class="w-full">
+                        <div class="mb-3">
+                          <label
+                            for="hobby"
+                            class="mb-3 block text-base font-medium text-[#07074D]">
+                            Unit Price
+                          </label>
+                          <input
+                            type="number"
+                            name="hobby"
+                            id="hobby"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                            required
+                            value={unitPrice}
+                            onChange={(e) => setunitprice(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      <div class="w-full">
+                        <div class="mb-3">
+                          <label
+                            for="hobby"
+                            class="mb-3 block text-base font-medium text-[#07074D]">
+                            Total
+                          </label>
+                          <input
+                            type="number"
+                            name="hobby"
+                            id="hobby"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                            required
+                            value={total}
+                            onChange={(e) => settotal(e.target.value)}
                           />
                         </div>
                       </div>

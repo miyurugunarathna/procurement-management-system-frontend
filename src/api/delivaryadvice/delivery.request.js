@@ -43,6 +43,16 @@ const getdeliveryforManager = async () => {
     return err.response;
   }
 };
+const deletedeliveryAdvice = async (deliveryID) => {
+  try {
+    const response = await apiInstance.delete(
+      `/api/deliveryAdvice/${deliveryID}`,
+    );
+    return response.data;
+  } catch (err) {
+    return err.response;
+  }
+};
 
 const deliveryRequest = {
   savedelivery,
@@ -50,6 +60,7 @@ const deliveryRequest = {
   updatedelivery,
   getdelivery,
   getdeliveryforManager,
+  deletedeliveryAdvice,
 };
 
 export default deliveryRequest;
