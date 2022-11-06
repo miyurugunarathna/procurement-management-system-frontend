@@ -2,6 +2,8 @@ import { Description } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import orderRequest from "../../api/Order/order.request";
+import deliveryRequest from "../../api/delivaryadvice/delivery.request";
+import Swal from "sweetalert2";
 
 const AddDeliveryAdvice = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -14,6 +16,9 @@ const AddDeliveryAdvice = () => {
   const [supplierID, setsupplierID] = useState("");
   const [managerID, setmanagerID] = useState("");
   const [orders, setorders] = useState([]);
+  const [deliveries, setdeliveries] = useState([]);
+  const [unitPrice, setunitprice] = useState(0);
+  const [total, settotal] = useState(0);
 
   useEffect(() => {
     orderRequest.getOrdersforSupplier().then((res) => {
@@ -25,11 +30,40 @@ const AddDeliveryAdvice = () => {
   useEffect(() => {
     if (orderID) {
       orderRequest.getOrder(orderID).then((res) => {
-        console.log(res);
-        // setorders(res.data);
+        console.log(res.data);
+        setsupplierID(res.data.supplierID);
+        setmanagerID(res.data.managerID);
+        console.log(res.data.managerID);
       });
     }
-  }, []);
+  }, [orderID]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    deliveryRequest
+      .savedelivery({
+        orderID,
+        deliveryItems,
+        deliveredDate,
+        quantity,
+        description,
+        supplierID,
+        unitPrice,
+        total,
+        managerID,
+      })
+      .then((res) => {
+        console.log(res);
+        Swal.fire(
+          `Purchase Order Created Successfully!`,
+          "Click Ok to continue",
+          "success",
+        );
+      })
+      .catch((err) => {
+        Swal.fire("Error!", "Something went wrong", "error");
+      });
+  };
 
   return (
     <>
@@ -37,7 +71,7 @@ const AddDeliveryAdvice = () => {
         className=" text-black  font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 max-w-[20rem]"
         type="button"
         onClick={() => setShowModal(true)}
-        style={{ marginLeft: "500px", backgroundColor: "blue" }}>
+        style={{ marginLeft: "1050px", backgroundColor: "blue" }}>
         Add Delivery Advice
       </button>
       {showModal ? (
@@ -49,7 +83,7 @@ const AddDeliveryAdvice = () => {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
-                    Update Order Details
+                    Add Delivery Advice
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -63,7 +97,7 @@ const AddDeliveryAdvice = () => {
 
                 <div class="flex items-center justify-center p-12">
                   <div class="w-full px-3 " style={{ width: "500px" }}>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div class="mb-3">
                         <label
                           for="guest"
@@ -156,6 +190,44 @@ const AddDeliveryAdvice = () => {
                         </div>
                       </div>
 
+                      <div class="w-full">
+                        <div class="mb-3">
+                          <label
+                            for="hobby"
+                            class="mb-3 block text-base font-medium text-[#07074D]">
+                            Unit Price
+                          </label>
+                          <input
+                            type="number"
+                            name="hobby"
+                            id="hobby"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                            required
+                            value={unitPrice}
+                            onChange={(e) => setunitprice(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      <div class="w-full">
+                        <div class="mb-3">
+                          <label
+                            for="hobby"
+                            class="mb-3 block text-base font-medium text-[#07074D]">
+                            Total
+                          </label>
+                          <input
+                            type="number"
+                            name="hobby"
+                            id="hobby"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                            required
+                            value={total}
+                            onChange={(e) => settotal(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
                       <div class="mb-4">
                         <label
                           for="message"
@@ -167,7 +239,7 @@ const AddDeliveryAdvice = () => {
                           rows="4"
                           class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           placeholder="Enter a Description"
-                          value={Description}
+                          value={description}
                           onChange={(e) =>
                             setdescription(e.target.value)
                           }></textarea>
