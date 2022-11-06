@@ -15,6 +15,13 @@ const UpdateProduct = ({ order }) => {
   const [price, setprice] = useState(0);
   const [inStock, setinStock] = useState(false);
 
+  const fetchProduct = () => {
+    productRequest.getProductsForSupplier().then((res) => {
+      console.log(res.data);
+      setorders(res.data);
+    });
+  };
+
   useEffect(() => {
     if ({ order }) {
       setitemName(order.itemName);
@@ -48,10 +55,11 @@ const UpdateProduct = ({ order }) => {
       .then((res) => {
         console.log(res);
         Swal.fire(
-          `Purchase Order Created Successfully!`,
+          `Product Updated Successfully!`,
           "Click Ok to continue",
           "success",
         );
+        fetchProduct();
       })
       .catch((err) => {
         Swal.fire("Error!", "Something went wrong", "error");
