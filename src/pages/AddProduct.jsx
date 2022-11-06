@@ -36,11 +36,10 @@ const AddProduct = () => {
       .then((res) => {
         console.log(res);
         Swal.fire(
-          `Purchase Order Created Successfully!`,
+          `Product Added Successfully!`,
           "Click Ok to continue",
           "success",
         );
-        clear();
       })
       .catch((err) => {
         Swal.fire("Error!", "Something went wrong", "error");

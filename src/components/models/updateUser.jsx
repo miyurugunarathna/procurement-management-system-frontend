@@ -17,6 +17,13 @@ const UpdateUser = ({ user }) => {
     });
   }, []);
 
+  const fetchUsers = () => {
+    userRequest.getAllUsers().then((res) => {
+      console.log(res.data);
+      setusers(res.data);
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (role === "SUPPLIER") {
@@ -35,6 +42,7 @@ const UpdateUser = ({ user }) => {
             "Click Ok to continue",
             "success",
           );
+          fetchUsers();
         })
         .catch((err) => {
           Swal.fire("Error!", "Something went wrong", "error");
@@ -54,6 +62,8 @@ const UpdateUser = ({ user }) => {
             "Click Ok to continue",
             "success",
           );
+
+          fetchUsers();
         })
         .catch((err) => {
           Swal.fire("Error!", "Something went wrong", "error");
