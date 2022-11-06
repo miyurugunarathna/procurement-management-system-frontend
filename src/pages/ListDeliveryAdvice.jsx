@@ -8,11 +8,12 @@ import AddDeliveryAdvice from "../components/models/AddDeliveryAdvice";
 import UpdateDeliveryAdvice from "../components/models/UpdateDeliveryAdvice";
 import SupplierSidebar from "../components/SupplierSidebar";
 import deliveryRequest from "../api/delivaryadvice/delivery.request";
+import AccountSidebar from "../components/AccountSidebar";
 
-const DeliveryAdviceManager = () => {
+const ListDeliveryAdvice = () => {
   const [deliveries, setdeliveries] = useState([]);
   useEffect(() => {
-    deliveryRequest.getdeliveryforManager().then((res) => {
+    deliveryRequest.getAlldeliveryAdvice().then((res) => {
       //console.log(res.data);
       setdeliveries(res.data);
     });
@@ -22,7 +23,7 @@ const DeliveryAdviceManager = () => {
     <div>
       <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <Header />
-        <Sidebar />
+        <AccountSidebar />
         <div
           class="h-full   pt-14 pb-14 md:ml-64"
           style={{
@@ -133,4 +134,4 @@ const DeliveryAdviceManager = () => {
   );
 };
 
-export default DeliveryAdviceManager;
+export default ListDeliveryAdvice;

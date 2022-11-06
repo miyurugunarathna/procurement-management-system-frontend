@@ -4,8 +4,10 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Cover from "../assets/images/supply.jpg";
 import orderRequest from "../api/Order/order.request";
+import AccountSidebar from "../components/AccountSidebar";
+import SupplierSidebar from "../components/SupplierSidebar";
 
-const PurchasedOrder = () => {
+const PurchasedOrderSupplier = () => {
   const [orders, setorders] = useState([]);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ const PurchasedOrder = () => {
     <div>
       <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <Header />
-        <Sidebar />
+        <SupplierSidebar />
         <div
           class="h-full   pt-14 pb-14 md:ml-64"
           style={{
@@ -79,4 +81,4 @@ const PurchasedOrder = () => {
   );
 };
 
-export default PurchasedOrder;
+export default PurchasedOrderSupplier;

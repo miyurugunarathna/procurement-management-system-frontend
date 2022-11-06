@@ -71,7 +71,7 @@ const AddDeliveryAdvice = () => {
         className=" text-black  font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 max-w-[20rem]"
         type="button"
         onClick={() => setShowModal(true)}
-        style={{ marginLeft: "1050px", backgroundColor: "blue" }}>
+        style={{ marginLeft: "1270px", backgroundColor: "blue" }}>
         Add Delivery Advice
       </button>
       {showModal ? (
@@ -98,7 +98,7 @@ const AddDeliveryAdvice = () => {
                 <div class="flex items-center justify-center p-12">
                   <div class="w-full px-3 " style={{ width: "500px" }}>
                     <form onSubmit={handleSubmit}>
-                      <div class="mb-3">
+                      <div class="mb-1">
                         <label
                           for="guest"
                           class="mb-3 block text-base font-medium text-[#07074D]">
@@ -124,7 +124,7 @@ const AddDeliveryAdvice = () => {
                         </select>
                       </div>
 
-                      <div class="mb-4">
+                      <div class="mb-1">
                         <label
                           for="message"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
@@ -172,7 +172,7 @@ const AddDeliveryAdvice = () => {
                       </div>
 
                       <div class="w-full">
-                        <div class="mb-3">
+                        <div class="mb-1">
                           <label
                             for="hobby"
                             class="mb-3 block text-base font-medium text-[#07074D]">
@@ -191,7 +191,7 @@ const AddDeliveryAdvice = () => {
                       </div>
 
                       <div class="w-full">
-                        <div class="mb-3">
+                        <div class="mb-1">
                           <label
                             for="hobby"
                             class="mb-3 block text-base font-medium text-[#07074D]">
@@ -210,7 +210,7 @@ const AddDeliveryAdvice = () => {
                       </div>
 
                       <div class="w-full">
-                        <div class="mb-3">
+                        <div class="mb-1">
                           <label
                             for="hobby"
                             class="mb-3 block text-base font-medium text-[#07074D]">
@@ -228,7 +228,7 @@ const AddDeliveryAdvice = () => {
                         </div>
                       </div>
 
-                      <div class="mb-4">
+                      <div class="mb-2">
                         <label
                           for="message"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">

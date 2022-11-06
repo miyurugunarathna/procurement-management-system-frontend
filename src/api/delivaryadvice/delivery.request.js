@@ -54,6 +54,27 @@ const deletedeliveryAdvice = async (deliveryID) => {
   }
 };
 
+const updatedeliveryAdvice = async (delivery, deliveryID) => {
+  try {
+    const response = await apiInstance.put(
+      `/api/deliveryAdvice/${deliveryID}`,
+      delivery,
+    );
+    return response.data;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+const getAlldeliveryAdvice = async () => {
+  try {
+    const response = await apiInstance.get(`/api/deliveryAdvice/`);
+    return response.data;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 const deliveryRequest = {
   savedelivery,
   deletedelivery,
@@ -61,6 +82,8 @@ const deliveryRequest = {
   getdelivery,
   getdeliveryforManager,
   deletedeliveryAdvice,
+  updatedeliveryAdvice,
+  getAlldeliveryAdvice,
 };
 
 export default deliveryRequest;

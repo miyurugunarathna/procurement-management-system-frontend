@@ -20,7 +20,7 @@ const DeliveryAdvice = () => {
   const deleteOrder = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `Please confirm whether you intend to delete this Order`,
+      text: `Please confirm whether you intend to delete this Delivery Advice`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -131,13 +131,13 @@ const DeliveryAdvice = () => {
                             <td class="py-3 px-6 text-left whitespace-nowrap">
                               <div class="flex items-center">
                                 <div class="mr-2"></div>
-                                <span class="font-medium">100.00</span>
+                                <span class="font-medium">{chi.unitPrice}</span>
                               </div>
                             </td>
                             <td class="py-3 px-6 text-left whitespace-nowrap">
                               <div class="flex items-center">
                                 <div class="mr-2"></div>
-                                <span class="font-medium">100.00</span>
+                                <span class="font-medium">{chi.total}</span>
                               </div>
                             </td>
                             <td class="py-3 px-6 text-left whitespace-nowrap">
@@ -154,9 +154,9 @@ const DeliveryAdvice = () => {
                                 <span class="font-medium">{chi.managerID}</span>
                               </div>
                             </td>
-                            <td class="py-3 px-6 ">
+                            <td class="py-3 px-6 text-left whitespace-nowrap">
                               <div class="flex item-center justify-center">
-                                <UpdateDeliveryAdvice />
+                                <UpdateDeliveryAdvice chi={chi} />
 
                                 <div
                                   class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"

@@ -1,7 +1,87 @@
+import { Description } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import orderRequest from "../../api/Order/order.request";
+import deliveryRequest from "../../api/delivaryadvice/delivery.request";
+import Swal from "sweetalert2";
 
-const UpdateDeliveryAdvice = () => {
+const UpdateDeliveryAdvice = ({ chi }) => {
   const [showModal, setShowModal] = React.useState(false);
+
+  const [orderID, setorderID] = useState("");
+  const [deliveryItems, setdeliveryItems] = useState("");
+  const [deliveredDate, setdeliveredDate] = useState("");
+  const [quantity, setquantity] = useState("");
+  const [description, setdescription] = useState("");
+  const [supplierID, setsupplierID] = useState("");
+  const [managerID, setmanagerID] = useState("");
+  const [orders, setorders] = useState([]);
+  const [deliveries, setdeliveries] = useState([]);
+  const [unitPrice, setunitprice] = useState(0);
+  const [total, settotal] = useState(0);
+
+  useEffect(() => {
+    orderRequest.getOrdersforSupplier().then((res) => {
+      //console.log(res.data);
+      setorders(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    if ({ chi }) {
+      setorderID(chi.orderID);
+      setdeliveryItems(chi.deliveryItems);
+      setdeliveredDate(chi.deliveredDate);
+      setquantity(chi.quantity);
+      setdescription(chi.description);
+      setsupplierID(chi.supplierID);
+      setmanagerID(chi.managerID);
+      setunitprice(chi.unitPrice);
+      settotal(chi.total);
+    }
+  }, [chi]);
+
+  useEffect(() => {
+    if (orderID) {
+      orderRequest.getOrder(orderID).then((res) => {
+        console.log(res.data);
+        setsupplierID(res.data.supplierID);
+        setmanagerID(res.data.managerID);
+        console.log(res.data.managerID);
+      });
+    }
+  }, [orderID]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    deliveryRequest
+      .updatedeliveryAdvice(
+        {
+          orderID,
+          deliveryItems,
+          deliveredDate,
+          quantity,
+          description,
+          supplierID,
+          unitPrice,
+          total,
+          managerID,
+        },
+        chi._id,
+      )
+      .then((res) => {
+        console.log(res);
+        Swal.fire(
+          `Purchase Order Created Successfully!`,
+          "Click Ok to continue",
+          "success",
+        );
+      })
+      .catch((err) => {
+        Swal.fire("Error!", "Something went wrong", "error");
+      });
+  };
+
   return (
     <>
       <div
@@ -29,7 +109,7 @@ const UpdateDeliveryAdvice = () => {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
-                    Update Order Details
+                    Add Delivery Advice
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -43,40 +123,56 @@ const UpdateDeliveryAdvice = () => {
 
                 <div class="flex items-center justify-center p-12">
                   <div class="w-full px-3 " style={{ width: "500px" }}>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div class="mb-3">
                         <label
                           for="guest"
                           class="mb-3 block text-base font-medium text-[#07074D]">
-                          Morning
+                          Order ID
                         </label>
                         <select
                           id="countries"
                           class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          required>
+                          required
+                          onChange={(e) => setorderID(e.target.value)}>
                           <option value="Select">Select </option>
-                          <option value="1 table spoon">1 table spoon</option>
-                          <option value="2 table spoon">2 table spoon</option>
-                          <option value="1 tablet">1 tablet</option>
-                          <option value="2 tablet">2 tablet</option>
-                          <option value="none">none</option>
+                          {!orders.length ? (
+                            <option value="none">
+                              No Supplier ID's Available
+                            </option>
+                          ) : (
+                            orders.map((supplier) => (
+                              <option value={supplier._id} key={supplier._id}>
+                                {supplier._id}
+                              </option>
+                            ))
+                          )}
                         </select>
                       </div>
 
-                      <div class="mb-3">
+                      <div class="mb-4">
                         <label
                           for="message"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                          Your message
+                          Delivered Items
                         </label>
                         <textarea
                           id="message"
                           rows="4"
                           class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="Your message..."></textarea>
+                          placeholder="Enter a Description"
+                          value={deliveryItems}
+                          onChange={(e) =>
+                            setdeliveryItems(e.target.value)
+                          }></textarea>
                       </div>
 
-                      <div class="relative mb-2">
+                      <div class="relative">
+                        <label
+                          for="message"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                          Delivered Date
+                        </label>
                         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                           <svg
                             aria-hidden="true"
@@ -96,6 +192,8 @@ const UpdateDeliveryAdvice = () => {
                           type="date"
                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           placeholder="Select date"
+                          value={deliveredDate}
+                          onChange={(e) => setdeliveredDate(e.target.value)}
                         />
                       </div>
 
@@ -104,7 +202,7 @@ const UpdateDeliveryAdvice = () => {
                           <label
                             for="hobby"
                             class="mb-3 block text-base font-medium text-[#07074D]">
-                            Medicine Name
+                            Quantity
                           </label>
                           <input
                             type="number"
@@ -112,8 +210,65 @@ const UpdateDeliveryAdvice = () => {
                             id="hobby"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             required
+                            value={quantity}
+                            onChange={(e) => setquantity(e.target.value)}
                           />
                         </div>
+                      </div>
+
+                      <div class="w-full">
+                        <div class="mb-3">
+                          <label
+                            for="hobby"
+                            class="mb-3 block text-base font-medium text-[#07074D]">
+                            Unit Price
+                          </label>
+                          <input
+                            type="number"
+                            name="hobby"
+                            id="hobby"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                            required
+                            value={unitPrice}
+                            onChange={(e) => setunitprice(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      <div class="w-full">
+                        <div class="mb-3">
+                          <label
+                            for="hobby"
+                            class="mb-3 block text-base font-medium text-[#07074D]">
+                            Total
+                          </label>
+                          <input
+                            type="number"
+                            name="hobby"
+                            id="hobby"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                            required
+                            value={total}
+                            onChange={(e) => settotal(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      <div class="mb-4">
+                        <label
+                          for="message"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                          Description
+                        </label>
+                        <textarea
+                          id="message"
+                          rows="4"
+                          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="Enter a Description"
+                          value={description}
+                          onChange={(e) =>
+                            setdescription(e.target.value)
+                          }></textarea>
                       </div>
 
                       <div className="flex">
