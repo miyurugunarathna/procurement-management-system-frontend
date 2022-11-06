@@ -54,22 +54,12 @@ const ListProducts = () => {
                     textAlign: "center",
                     padding: "10px",
                   }}
-                  key={orders._id}>
-                  <p>Order ID </p>
-                  <br />
-                  <p>{order._id}</p>
-                  <br />
-                  <p>Manager ID</p>
-                  <br />
-                  <p>{order.managerID}</p>
-                  <br />
-                  <p>Supplier ID</p>
-                  <br />
-                  <p>{order.supplierID}</p>
-                  <br />
-                  <p>Delivery Status</p>
-                  <br />
-                  <p>{order.available}</p>
+                  key={order._id}>
+                  <img
+                    class="w-full"
+                    src={order.image}
+                    alt="Sunset in the mountains"></img>
+                  <p>name</p>
                   <br />
                 </div>
               ))

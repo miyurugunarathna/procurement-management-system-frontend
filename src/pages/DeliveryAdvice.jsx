@@ -64,6 +64,8 @@ const DeliveryAdvice = () => {
                         <th class="py-3 px-6 text-center">Delivery Items</th>
                         <th class="py-3 px-6 text-center">Delivered Date</th>
                         <th class="py-3 px-6 text-center">Quantity</th>
+                        <th class="py-3 px-6 text-center">Unit Price</th>
+                        <th class="py-3 px-6 text-center">Total</th>
                         <th class="py-3 px-6 text-center">description</th>
                         <th class="py-3 px-6 text-center">Manager ID</th>
                         <th class="py-3 px-6 text-center">Actions</th>
@@ -113,6 +115,12 @@ const DeliveryAdvice = () => {
                               <div class="flex items-center">
                                 <div class="mr-2"></div>
                                 <span class="font-medium">{chi.quantity}</span>
+                              </div>
+                            </td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">
+                              <div class="flex items-center">
+                                <div class="mr-2"></div>
+                                <span class="font-medium">100.00</span>
                               </div>
                             </td>
                             <td class="py-3 px-6 text-left whitespace-nowrap">

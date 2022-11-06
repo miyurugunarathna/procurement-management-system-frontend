@@ -35,12 +35,21 @@ const getdelivery = async () => {
     return err.response;
   }
 };
+const getdeliveryforManager = async () => {
+  try {
+    const response = await apiInstance.get(`/api/deliveryAdvice/manager`);
+    return response.data;
+  } catch (err) {
+    return err.response;
+  }
+};
 
 const deliveryRequest = {
   savedelivery,
   deletedelivery,
   updatedelivery,
   getdelivery,
+  getdeliveryforManager,
 };
 
 export default deliveryRequest;
